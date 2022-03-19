@@ -1,5 +1,5 @@
-resource "random_id" "run_id" {
-  byte_length = 4
+resource "random_id" "instance_suffix" {
+  byte_length = 2
 }
 
 resource "random_id" "random_string" {
@@ -10,7 +10,7 @@ module "test_sql_database_instance" {
 
   source = "../modules/google_sql_database_instance"
 
-  name = "${var.instance_name}-${random_id.run_id.hex}"
+  name = "${var.instance_name}-${random_id.instance_suffix.hex}"
 
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled

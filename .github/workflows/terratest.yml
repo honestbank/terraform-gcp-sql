@@ -7,10 +7,12 @@ on:
     branches:
       - main
 env:
-  GOOGLE_CREDENTIALS: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TERRATEST_GOOGLE_CREDENTIALS: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
   GOOGLE_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
   GCP_SA_EMAIL: ${{ secrets.TERRATEST_GCP_SA_EMAIL }}
   TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_region: ${{ secrets.TERRATEST_GOOGLE_REGION }}
   TF_VAR_shared_vpc_host_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
 jobs:
   terratest:

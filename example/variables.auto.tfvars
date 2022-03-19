@@ -1,12 +1,12 @@
 database_version = "MYSQL_8_0"
-instance_name    = "test-terraform-cloud-sql"
+instance_name    = "sql-instance"
 
-database_name_1 = "test-cloud-db-first"
-database_name_2 = "test-cloud-db-second"
+database_name_1 = "db-first"
+database_name_2 = "db-second"
 
 user_host = "%"
 user_type = "BUILT_IN"
-user_name = "test-cloud-sql-user"
+user_name = "sql-user"
 
 deletion_protection = false
 

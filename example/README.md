@@ -7,7 +7,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.1.1 |
 
 ## Modules
 
@@ -22,8 +22,8 @@ No requirements.
 
 | Name | Type |
 |------|------|
+| [random_id.instance_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.random_string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
-| [random_id.run_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 
 ## Inputs
 
@@ -64,9 +64,9 @@ No requirements.
 | <a name="output_test_sql_user_name"></a> [test\_sql\_user\_name](#output\_test\_sql\_user\_name) | The name of the user. |
 | <a name="output_test_sql_user_password"></a> [test\_sql\_user\_password](#output\_test\_sql\_user\_password) | The password for the user |
 | <a name="output_test_sql_user_type"></a> [test\_sql\_user\_type](#output\_test\_sql\_user\_type) | The user type |
-| <a name="output_test_terraform_cloud_sql_connection_name"></a> [test\_terraform\_cloud\_sql\_connection\_name](#output\_test\_terraform\_cloud\_sql\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
-| <a name="output_test_terraform_cloud_sql_first_ip_address"></a> [test\_terraform\_cloud\_sql\_first\_ip\_address](#output\_test\_terraform\_cloud\_sql\_first\_ip\_address) | The IPv4 address assigned. |
-| <a name="output_test_terraform_cloud_sql_instance_name"></a> [test\_terraform\_cloud\_sql\_instance\_name](#output\_test\_terraform\_cloud\_sql\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
-| <a name="output_test_terraform_cloud_sql_self_link"></a> [test\_terraform\_cloud\_sql\_self\_link](#output\_test\_terraform\_cloud\_sql\_self\_link) | The URI of the created resource. |
-| <a name="output_test_terraform_cloud_sql_service_account_email_address"></a> [test\_terraform\_cloud\_sql\_service\_account\_email\_address](#output\_test\_terraform\_cloud\_sql\_service\_account\_email\_address) | The service account email address assigned to the instance. |
+| <a name="output_test_terraform_sql_connection_name"></a> [test\_terraform\_sql\_connection\_name](#output\_test\_terraform\_sql\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_test_terraform_sql_first_ip_address"></a> [test\_terraform\_sql\_first\_ip\_address](#output\_test\_terraform\_sql\_first\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_test_terraform_sql_instance_name"></a> [test\_terraform\_sql\_instance\_name](#output\_test\_terraform\_sql\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_test_terraform_sql_self_link"></a> [test\_terraform\_sql\_self\_link](#output\_test\_terraform\_sql\_self\_link) | The URI of the created resource. |
+| <a name="output_test_terraform_sql_service_account_email_address"></a> [test\_terraform\_sql\_service\_account\_email\_address](#output\_test\_terraform\_sql\_service\_account\_email\_address) | The service account email address assigned to the instance. |
 <!-- END_TF_DOCS -->

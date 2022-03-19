@@ -1,4 +1,4 @@
-# Terraform Layer Module Template Repository
+# Terraform GCP SQL Module
 
 Use this repository as a starting point for building a [Terraform Component Module](https://www.notion.so/honestbank/WIP-How-to-structure-a-Terraform-module-31374a1594f84ef7b185ef4e06b36619).
 
@@ -42,42 +42,3 @@ customize as needed.
 
 This template contains a [semantic-release](https://github.com/semantic-release/semantic-release) [configuration file](./release.config.js)
 that is configured to produce releases on merge to `main`.
-
-### GitHub Actions
-
-This template contains [a 'terraform' action/workflow](./.github/workflows/terraform.yml) that is configured to run on
-PRs and pushes to four branches:
-
-* test
-* dev
-* qa
-* prod
-
-It expects a set of Terraform Cloud workspaces ending in the branch name (eg. `infra-test`, `infra-dev`, `infra-qa`, `infra-prod`).
-For single-branch workspaces/repos (for example, if you only have a `prod` branch), update/edit the [terraform.yml workflow file](./.github/workflows/terraform.yml).
-
-<!-- BEGIN_TF_DOCS -->
-## Requirements
-
-No requirements.
-
-## Providers
-
-No providers.
-
-## Modules
-
-No modules.
-
-## Resources
-
-No resources.
-
-## Inputs
-
-No inputs.
-
-## Outputs
-
-No outputs.
-<!-- END_TF_DOCS -->

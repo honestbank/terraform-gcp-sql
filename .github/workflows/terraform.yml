@@ -10,6 +10,10 @@ env:
   tf_version: "latest"
   tf_working_dir: "."
   GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS_READ_ALL_PROJECTS }}
+  GOOGLE_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
+  TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_region: ${{ secrets.TERRATEST_GOOGLE_REGION }}
 jobs:
   terraform:
     name: "terraform"
@@ -26,19 +30,19 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Format
         id: fmt
-        run: terraform fmt
+        run: make lint
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.ENGINEERING_GITHUB_PERSONAL_ACCESS_TOKEN }}
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: cd example;terraform init
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
+        run: cd example;terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: cd example;terraform plan -no-color
         continue-on-error: true
       - uses: actions/github-script@v4
         if: github.event_name == 'pull_request'

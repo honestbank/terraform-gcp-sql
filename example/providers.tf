@@ -14,6 +14,10 @@ provider "google" {
     "https://www.googleapis.com/auth/ndev.clouddns.readwrite",
     "https://www.googleapis.com/auth/devstorage.full_control",
 
+    # Cloud SQL Admin API, v1beta4
+    "https://www.googleapis.com/auth/sqlservice.admin",
+    "https://www.googleapis.com/auth/cloud-platform",
+
     # Required for google_client_openid_userinfo
     "https://www.googleapis.com/auth/userinfo.email",
   ]

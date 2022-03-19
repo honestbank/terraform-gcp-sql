@@ -1,4 +1,4 @@
-lint: docs
+lint:
 	terraform fmt --recursive
 
 validate: lint
@@ -9,7 +9,7 @@ docs:
 	terraform-docs -c .terraform-docs.yml .
 	cd example/; terraform-docs markdown . --output-file README.md --output-mode inject
 
-commit: docs lint validate
+commit: docs validate
 
 apply_and_destroy:
 	 terraform apply -auto-approve && terraform apply -auto-approve -destroy
