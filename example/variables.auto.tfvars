@@ -1,5 +1,4 @@
 database_version = "MYSQL_8_0"
-instance_name    = "sql-instance"
 
 database_name_1 = "db-first"
 database_name_2 = "db-second"

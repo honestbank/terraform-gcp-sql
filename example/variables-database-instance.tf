@@ -9,12 +9,6 @@ variable "database_version" {
   }
 }
 
-variable "instance_name" {
-  description = "(Optional, Computed) The name of the instance. If the name is left blank, Terraform will randomly generate one when the instance is first created. This is done because after a name is used, it cannot be reused for up to one week."
-  type        = string
-  nullable    = true
-}
-
 variable "deletion_protection" {
   description = "(Optional) Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail."
   type        = bool
