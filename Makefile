@@ -7,7 +7,7 @@ validate: lint
 
 docs:
 	terraform-docs -c .terraform-docs.yml .
-	cd example/; terraform-docs markdown . --output-file README.md --output-mode inject
+	terraform-docs -c .terraform-docs-examples.yml .
 
 commit: docs validate
 

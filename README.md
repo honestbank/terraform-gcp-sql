@@ -42,3 +42,31 @@ customize as needed.
 
 This template contains a [semantic-release](https://github.com/semantic-release/semantic-release) [configuration file](./release.config.js)
 that is configured to produce releases on merge to `main`.
+
+{% comment %}
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+No providers.
+
+## Modules
+
+No modules.
+
+## Resources
+
+No resources.
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
+{% endcomment %}
