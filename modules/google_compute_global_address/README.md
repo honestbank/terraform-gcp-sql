@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | n/a |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.0.0 |
 
 ## Modules
 
@@ -19,7 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google-beta_google_compute_global_address.default_network](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_compute_global_address) | resource |
+| [google_compute_global_address.default_network](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_global_address) | resource |
 
 ## Inputs
 
@@ -40,5 +40,6 @@ No modules.
 |------|-------------|
 | <a name="output_creation_timestamp"></a> [creation\_timestamp](#output\_creation\_timestamp) | Creation timestamp in RFC3339 text format. |
 | <a name="output_id"></a> [id](#output\_id) | an identifier for the resource with format `projects/{{project}}/global/addresses/{{name}}`. |
+| <a name="output_name"></a> [name](#output\_name) | Name of the resource. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The URI of the created resource. |
 <!-- END_TF_DOCS -->

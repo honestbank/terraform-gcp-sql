@@ -8,6 +8,8 @@ terraform {
 }
 
 resource "google_compute_network" "vpc_network" {
+  #  provider = google-beta
+
   name        = var.name
   description = var.description
 

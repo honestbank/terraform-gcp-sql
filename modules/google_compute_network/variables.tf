@@ -11,8 +11,8 @@ variable "description" {
 
 variable "auto_create_subnetworks" {
   description = "(Optional) When set to `true`, the network is created in `auto subnet mode` and it will create a subnet for each region automatically across the `10.128.0.0/9` address range. When set to `false`, the network is created in `custom subnet mode` so the user can explicitly connect subnetwork resources."
-  type        = string
-  default     = ""
+  type        = bool
+  default     = true
 }
 
 variable "routing_mode" {
@@ -23,8 +23,8 @@ variable "routing_mode" {
 
 variable "mtu" {
   description = "(Optional) Maximum Transmission Unit in bytes. The minimum value for this field is 1460 and the maximum value is 1500 bytes"
-  type        = string
-  default     = ""
+  type        = number
+  default     = 0
 }
 
 variable "delete_default_routes_on_create" {

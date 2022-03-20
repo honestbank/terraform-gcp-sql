@@ -7,15 +7,20 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.1.2 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_google_compute_global_address_private_ip_address"></a> [google\_compute\_global\_address\_private\_ip\_address](#module\_google\_compute\_global\_address\_private\_ip\_address) | ../modules/google_compute_global_address | n/a |
+| <a name="module_google_compute_network_private_network"></a> [google\_compute\_network\_private\_network](#module\_google\_compute\_network\_private\_network) | ../modules/google_compute_network | n/a |
+| <a name="module_google_service_networking_connection_private_vpc_connection"></a> [google\_service\_networking\_connection\_private\_vpc\_connection](#module\_google\_service\_networking\_connection\_private\_vpc\_connection) | ../modules/google_service_networking_connection | n/a |
 | <a name="module_test_sql_database_1"></a> [test\_sql\_database\_1](#module\_test\_sql\_database\_1) | ../modules/google_sql_database | n/a |
 | <a name="module_test_sql_database_2"></a> [test\_sql\_database\_2](#module\_test\_sql\_database\_2) | ../modules/google_sql_database | n/a |
+| <a name="module_test_sql_database_3"></a> [test\_sql\_database\_3](#module\_test\_sql\_database\_3) | ../modules/google_sql_database | n/a |
 | <a name="module_test_sql_database_instance"></a> [test\_sql\_database\_instance](#module\_test\_sql\_database\_instance) | ../modules/google_sql_database_instance | n/a |
+| <a name="module_test_sql_database_instance_private_ip"></a> [test\_sql\_database\_instance\_private\_ip](#module\_test\_sql\_database\_instance\_private\_ip) | ../modules/google_sql_database_instance | n/a |
 | <a name="module_test_sql_user"></a> [test\_sql\_user](#module\_test\_sql\_user) | ../modules/google_sql_user | n/a |
 
 ## Resources
@@ -59,6 +64,8 @@ No requirements.
 | <a name="output_test_sql_database_1_self_link"></a> [test\_sql\_database\_1\_self\_link](#output\_test\_sql\_database\_1\_self\_link) | The URI of the created resource. |
 | <a name="output_test_sql_database_2_id"></a> [test\_sql\_database\_2\_id](#output\_test\_sql\_database\_2\_id) | an identifier for the resource with format projects/{{project}}/instances/{{instance}}/databases/{{name}} |
 | <a name="output_test_sql_database_2_self_link"></a> [test\_sql\_database\_2\_self\_link](#output\_test\_sql\_database\_2\_self\_link) | The URI of the created resource. |
+| <a name="output_test_sql_database_instance_private_ip_instance_name"></a> [test\_sql\_database\_instance\_private\_ip\_instance\_name](#output\_test\_sql\_database\_instance\_private\_ip\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_test_sql_database_instance_private_ip_self_link"></a> [test\_sql\_database\_instance\_private\_ip\_self\_link](#output\_test\_sql\_database\_instance\_private\_ip\_self\_link) | The URI of the created resource. |
 | <a name="output_test_sql_user_name"></a> [test\_sql\_user\_name](#output\_test\_sql\_user\_name) | The name of the user. |
 | <a name="output_test_sql_user_password"></a> [test\_sql\_user\_password](#output\_test\_sql\_user\_password) | The password for the user |
 | <a name="output_test_sql_user_type"></a> [test\_sql\_user\_type](#output\_test\_sql\_user\_type) | The user type |

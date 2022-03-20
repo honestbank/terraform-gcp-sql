@@ -8,6 +8,16 @@ output "test_terraform_sql_instance_name" {
   value       = module.test_sql_database_instance.instance_name
 }
 
+output "test_sql_database_instance_private_ip_instance_name" {
+  description = "The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy."
+  value       = module.test_sql_database_instance_private_ip.instance_name
+}
+
+output "test_sql_database_instance_private_ip_self_link" {
+  description = "The URI of the created resource."
+  value       = module.test_sql_database_instance_private_ip.self_link
+}
+
 output "test_terraform_sql_self_link" {
   description = "The URI of the created resource."
   value       = module.test_sql_database_instance.self_link

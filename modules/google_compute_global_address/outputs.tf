@@ -12,3 +12,8 @@ output "creation_timestamp" {
   description = "Creation timestamp in RFC3339 text format."
   value       = google_compute_global_address.default_network.creation_timestamp
 }
+
+output "name" {
+  description = "Name of the resource."
+  value       = google_compute_global_address.default_network.name
+}
