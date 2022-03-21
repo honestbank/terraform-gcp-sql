@@ -7,12 +7,12 @@ validate: lint
 
 docs:
 	terraform-docs -c .terraform-docs.yml .
-	cd example/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/create_mysql_instance_with_public_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
 
 commit: docs validate
 
 apply_and_destroy:
 	 terraform apply -auto-approve && terraform apply -auto-approve -destroy
 
-test:
-	cd test; go test -v -timeout 30m
+tests:
+	cd test; go clean -testcache; go test -v -timeout 30m
