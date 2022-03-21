@@ -4,13 +4,18 @@ import (
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTerraformCreateGCPSQL(t *testing.T) {
+
+	testDirectory := test_structure.CopyTerraformFolderToTemp(t, "..", "example")
+
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../example",
+		TerraformDir: testDirectory,
+		EnvVars:      map[string]string{"TF_LOG": "TRACE"},
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
