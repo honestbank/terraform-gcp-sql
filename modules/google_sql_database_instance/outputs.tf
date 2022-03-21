@@ -22,3 +22,18 @@ output "first_ip_address" {
   description = "The IPv4 address assigned."
   value       = google_sql_database_instance.instance.first_ip_address
 }
+
+output "ip_address" {
+  description = "The IPv4 address assigned."
+  value       = google_sql_database_instance.instance.ip_address
+}
+
+output "public_ip_address" {
+  description = " The first public (`PRIMARY`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config."
+  value       = google_sql_database_instance.instance.public_ip_address
+}
+
+output "private_ip_address" {
+  description = "The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config."
+  value       = google_sql_database_instance.instance.private_ip_address
+}

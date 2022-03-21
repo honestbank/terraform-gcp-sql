@@ -49,6 +49,9 @@ No modules.
 | <a name="output_connection_name"></a> [connection\_name](#output\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_first_ip_address"></a> [first\_ip\_address](#output\_first\_ip\_address) | The IPv4 address assigned. |
 | <a name="output_instance_name"></a> [instance\_name](#output\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_private_ip_address"></a> [private\_ip\_address](#output\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
+| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The URI of the created resource. |
 | <a name="output_service_account_email_address"></a> [service\_account\_email\_address](#output\_service\_account\_email\_address) | The service account email address assigned to the instance. |
 <!-- END_TF_DOCS -->

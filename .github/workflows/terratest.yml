@@ -13,6 +13,7 @@ env:
   TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
   TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
   TF_VAR_google_region: ${{ secrets.TERRATEST_GOOGLE_REGION }}
+  TF_LOG: ${{ secrets.TF_LOG }}
 
 jobs:
   terratest:
