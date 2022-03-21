@@ -22,6 +22,7 @@ No requirements.
 
 | Name | Type |
 |------|------|
+| [random_id.instance_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.random_string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 
 ## Inputs

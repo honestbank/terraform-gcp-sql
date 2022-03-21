@@ -7,11 +7,12 @@ on:
     branches:
       - main
 env:
-  TERRATEST_GOOGLE_CREDENTIALS: ${{ secrets.POOM_TERRATEST_GOOGLE_CREDENTIALS }}
-  TERRATEST_GOOGLE_PROJECT: ${{ secrets.POOM_TERRATEST_GOOGLE_PROJECT }}
-  TF_VAR_google_credentials: ${{ secrets.POOM_TERRATEST_GOOGLE_CREDENTIALS }}
-  TF_VAR_google_project: ${{ secrets.POOM_TERRATEST_GOOGLE_CREDENTIALS }}
-  TF_VAR_google_region: ${{ secrets.POOM_TERRATEST_GOOGLE_REGION }}
+  TERRATEST_GOOGLE_CREDENTIALS: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TERRATEST_GOOGLE_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
+  GOOGLE_CLOUD_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
+  TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_region: ${{ secrets.TERRATEST_GOOGLE_REGION }}
 
 jobs:
   terratest:
@@ -23,10 +24,10 @@ jobs:
         with:
           submodules: true
 
-      - name: Set up Go (1.18)
+      - name: Set up Go (1.17)
         uses: actions/setup-go@v3
         with:
-          go-version: 1.18
+          go-version: 1.17
         id: go
 
       - name: prepare test environment
