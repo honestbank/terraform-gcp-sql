@@ -1,6 +1,7 @@
 package test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -15,7 +16,7 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 	// retryable errors in terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: testDirectory,
-		EnvVars:      map[string]string{"TF_LOG": "TRACE"},
+		EnvVars:      map[string]string{"TF_LOG": os.Getenv("TF_LOG")},
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
