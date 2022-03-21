@@ -32,11 +32,11 @@ jobs:
       - name: prepare test environment
         run: source ./test/prepare-test-environment.sh
 
-      - id: 'google-cloud-auth'
+      - id: "google-cloud-auth"
         name: Google Cloud Auth
-        uses: 'google-github-actions/auth@v0'
+        uses: "google-github-actions/auth@v0"
         with:
-          credentials_json: '${{ env.TERRATEST_GOOGLE_CREDENTIALS }}'
+          credentials_json: "${{ env.TERRATEST_GOOGLE_CREDENTIALS }}"
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v0
@@ -44,12 +44,13 @@ jobs:
           version: "latest" # This is the default value anyways, just being explicit
           project_id: ${{ env.TERRATEST_GOOGLE_PROJECT }}
 
-      - name: 'Use gcloud cli'
-        run: 'gcloud info'
+      - name: "Use gcloud cli"
+        run: "gcloud info"
 
       - name: Run terratest
         run: |
           cd test
+          go clean -testcache
           go test -v -timeout 60m
       - name: Release
         if: github.event_name == 'push'
