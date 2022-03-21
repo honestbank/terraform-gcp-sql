@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.0.0"
+      version = "4.12.0"
     }
   }
 }
@@ -17,10 +17,12 @@ resource "google_sql_database_instance" "instance" {
 
   settings {
 
-    tier              = var.settings_tier
-    disk_size         = var.settings_disk_size
-    disk_type         = var.settings_disk_type
-    availability_type = var.settings_availability_type
+    tier                  = var.settings_tier
+    disk_size             = var.settings_disk_size
+    disk_autoresize       = var.settings_disk_autoresize
+    disk_type             = var.settings_disk_type
+    availability_type     = var.settings_availability_type
+    disk_autoresize_limit = 20
 
     backup_configuration {
       enabled            = var.settings_backup_configuration_enabled

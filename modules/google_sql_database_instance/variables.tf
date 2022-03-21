@@ -60,6 +60,18 @@ variable "settings_disk_size" {
   default     = 10
 }
 
+variable "settings_disk_autoresize" {
+  description = "(Optional, Default: `true`) Configuration to increase storage size automatically. Note that future `terraform apply` calls will attempt to resize the disk to the value specified in `disk_size` - if this is set, do not set `disk_size`."
+  type        = bool
+  default     = true
+}
+
+variable "settings_disk_autoresize_limit" {
+  description = "(Optional, Default: `0`) The maximum size, in GB, to which storage capacity can be automatically increased. The default value is `0`, which specifies that there is no limit."
+  type        = number
+  default     = 0
+}
+
 variable "settings_disk_type" {
   description = "(Optional, Default: `PD_SSD`) The type of data disk: `PD_SSD` or `PD_HDD`."
   type        = string

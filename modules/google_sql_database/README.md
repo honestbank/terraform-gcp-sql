@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | 4.12.0 |
 
 ## Providers
 
@@ -19,7 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google_sql_database.database](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database) | resource |
+| [google_sql_database.database](https://registry.terraform.io/providers/hashicorp/google/4.12.0/docs/resources/sql_database) | resource |
 
 ## Inputs
 
