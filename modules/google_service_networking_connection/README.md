@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | 4.14.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.14.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.0.0 |
 
 ## Modules
 
@@ -19,7 +19,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google_service_networking_connection.network](https://registry.terraform.io/providers/hashicorp/google/4.14.0/docs/resources/service_networking_connection) | resource |
+| [google_service_networking_connection.network](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_networking_connection) | resource |
 
 ## Inputs
 

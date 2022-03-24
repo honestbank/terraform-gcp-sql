@@ -12,7 +12,7 @@ module "google_compute_network_private_network" {
   name = "private-network-${random_id.instance_suffix.hex}"
 }
 
-module "google_compute_global_address_private_ip_address" {
+module "google_compute_global_address_private_ip" {
   source = "../../modules/google_compute_global_address"
 
   name          = "private-ip-address-${random_id.instance_suffix.hex}"
@@ -27,46 +27,55 @@ module "google_service_networking_connection_private_vpc_connection" {
 
   network                 = module.google_compute_network_private_network.id
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [module.google_compute_global_address_private_ip_address.name]
+  reserved_peering_ranges = [module.google_compute_global_address_private_ip.name]
 }
 
-module "test_sql_database_instance_private_ip" {
+module "sql_database_instance" {
   source = "../../modules/google_sql_database_instance"
 
-  name = "sql-private-${random_id.instance_suffix.hex}"
+  name = "sql-rr-${random_id.instance_suffix.hex}"
 
   depends_on = [module.google_service_networking_connection_private_vpc_connection]
 
 
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
-  settings_ip_configuration_ipv4_enabled           = false
-  settings_ip_configuration_private_network        = module.google_compute_network_private_network.id
-  settings_ip_configuration_require_ssl            = var.settings_ip_configuration_require_ssl
-  settings_tier                                    = var.settings_tier
-  deletion_protection                              = false
+
+  # Requirements for using the Cloud SQL Auth proxy
+  # https://cloud.google.com/sql/docs/mysql/sql-proxy#requirements
+
+  settings_ip_configuration_ipv4_enabled    = true
+  settings_ip_configuration_private_network = module.google_compute_network_private_network.id
+  settings_ip_configuration_require_ssl     = var.settings_ip_configuration_require_ssl
+  settings_tier                             = var.settings_tier
+  deletion_protection                       = false
+
+  enable_read_replica                                 = true
+  read_replica_settings_ip_configuration_ipv4_enabled = true
+  read_replica_settings_tier                          = var.settings_tier
 }
 
-module "test_sql_database" {
+module "sql_database" {
   source = "../../modules/google_sql_database"
 
   depends_on = [
-    module.test_sql_user
+    module.sql_user
   ]
 
-  instance_name = module.test_sql_database_instance_private_ip.instance_name
+  instance_name = module.sql_database_instance.instance_name
   name          = var.database_name
 }
 
-module "test_sql_user" {
+module "sql_user" {
   source = "../../modules/google_sql_user"
 
   depends_on = [
-    module.test_sql_database_instance_private_ip
+    module.sql_database_instance
   ]
 
-  instance_name = module.test_sql_database_instance_private_ip.instance_name
+  instance_name = module.sql_database_instance.instance_name
   name          = var.user_name
   password      = random_id.random_string.hex
+  host          = "%"
   type          = var.user_type
 }

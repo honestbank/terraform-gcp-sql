@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        tests: [ "create_mysql_instance_with_public_ip", "create_mysql_instance_with_private_ip" ]
+        tests: [ "create_mysql_instance_with_public_ip", "create_mysql_instance_with_private_ip", "mysql_instance_with_read_replica" ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2

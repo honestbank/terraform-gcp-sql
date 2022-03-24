@@ -4,11 +4,15 @@ lint:
 validate: lint
 	cd examples/create_mysql_instance_with_public_ip/; terraform init; terraform validate
 	cd examples/create_mysql_instance_with_private_ip/; terraform init; terraform validate
+	cd examples/mysql_instance_with_read_replica/; terraform init; terraform validate
+	cd examples/test-terratest/; terraform init; terraform validate
 
 docs:
 	terraform-docs -c .terraform-docs.yml .
 	cd examples/create_mysql_instance_with_public_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
 	cd examples/create_mysql_instance_with_private_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/mysql_instance_with_read_replica/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/test-terratest/; terraform-docs markdown . --output-file README.md --output-mode inject
 
 commit: docs validate
 

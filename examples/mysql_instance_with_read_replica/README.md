@@ -13,12 +13,12 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_google_compute_global_address_private_ip_address"></a> [google\_compute\_global\_address\_private\_ip\_address](#module\_google\_compute\_global\_address\_private\_ip\_address) | ../../modules/google_compute_global_address | n/a |
+| <a name="module_google_compute_global_address_private_ip"></a> [google\_compute\_global\_address\_private\_ip](#module\_google\_compute\_global\_address\_private\_ip) | ../../modules/google_compute_global_address | n/a |
 | <a name="module_google_compute_network_private_network"></a> [google\_compute\_network\_private\_network](#module\_google\_compute\_network\_private\_network) | ../../modules/google_compute_network | n/a |
 | <a name="module_google_service_networking_connection_private_vpc_connection"></a> [google\_service\_networking\_connection\_private\_vpc\_connection](#module\_google\_service\_networking\_connection\_private\_vpc\_connection) | ../../modules/google_service_networking_connection | n/a |
-| <a name="module_test_sql_database"></a> [test\_sql\_database](#module\_test\_sql\_database) | ../../modules/google_sql_database | n/a |
-| <a name="module_test_sql_database_instance_private_ip"></a> [test\_sql\_database\_instance\_private\_ip](#module\_test\_sql\_database\_instance\_private\_ip) | ../../modules/google_sql_database_instance | n/a |
-| <a name="module_test_sql_user"></a> [test\_sql\_user](#module\_test\_sql\_user) | ../../modules/google_sql_user | n/a |
+| <a name="module_sql_database"></a> [sql\_database](#module\_sql\_database) | ../../modules/google_sql_database | n/a |
+| <a name="module_sql_database_instance"></a> [sql\_database\_instance](#module\_sql\_database\_instance) | ../../modules/google_sql_database_instance | n/a |
+| <a name="module_sql_user"></a> [sql\_user](#module\_sql\_user) | ../../modules/google_sql_user | n/a |
 
 ## Resources
 
@@ -54,16 +54,23 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | <a name="output_random_string"></a> [random\_string](#output\_random\_string) | Random string |
-| <a name="output_test_sql_database_id"></a> [test\_sql\_database\_id](#output\_test\_sql\_database\_id) | an identifier for the resource with format projects/{{project}}/instances/{{instance}}/databases/{{name}} |
-| <a name="output_test_sql_database_instance_private_ip_connection_name"></a> [test\_sql\_database\_instance\_private\_ip\_connection\_name](#output\_test\_sql\_database\_instance\_private\_ip\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
-| <a name="output_test_sql_database_instance_private_ip_first_ip_address"></a> [test\_sql\_database\_instance\_private\_ip\_first\_ip\_address](#output\_test\_sql\_database\_instance\_private\_ip\_first\_ip\_address) | The IPv4 address assigned. |
-| <a name="output_test_sql_database_instance_private_ip_instance_name"></a> [test\_sql\_database\_instance\_private\_ip\_instance\_name](#output\_test\_sql\_database\_instance\_private\_ip\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
-| <a name="output_test_sql_database_instance_private_ip_private_ip_address"></a> [test\_sql\_database\_instance\_private\_ip\_private\_ip\_address](#output\_test\_sql\_database\_instance\_private\_ip\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. |
-| <a name="output_test_sql_database_instance_private_ip_public_ip_address"></a> [test\_sql\_database\_instance\_private\_ip\_public\_ip\_address](#output\_test\_sql\_database\_instance\_private\_ip\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. |
-| <a name="output_test_sql_database_instance_private_ip_self_link"></a> [test\_sql\_database\_instance\_private\_ip\_self\_link](#output\_test\_sql\_database\_instance\_private\_ip\_self\_link) | The URI of the created resource. |
-| <a name="output_test_sql_database_instance_private_ip_service_account_email_address"></a> [test\_sql\_database\_instance\_private\_ip\_service\_account\_email\_address](#output\_test\_sql\_database\_instance\_private\_ip\_service\_account\_email\_address) | The service account email address assigned to the instance. |
-| <a name="output_test_sql_database_self_link"></a> [test\_sql\_database\_self\_link](#output\_test\_sql\_database\_self\_link) | The URI of the created resource. |
-| <a name="output_test_sql_user_name"></a> [test\_sql\_user\_name](#output\_test\_sql\_user\_name) | The name of the user. |
-| <a name="output_test_sql_user_password"></a> [test\_sql\_user\_password](#output\_test\_sql\_user\_password) | The password for the user |
-| <a name="output_test_sql_user_type"></a> [test\_sql\_user\_type](#output\_test\_sql\_user\_type) | The user type |
+| <a name="output_sql_database_instance_master_connection_name"></a> [sql\_database\_instance\_master\_connection\_name](#output\_sql\_database\_instance\_master\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_sql_database_instance_master_first_ip_address"></a> [sql\_database\_instance\_master\_first\_ip\_address](#output\_sql\_database\_instance\_master\_first\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_sql_database_instance_master_instance_name"></a> [sql\_database\_instance\_master\_instance\_name](#output\_sql\_database\_instance\_master\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_sql_database_instance_master_private_ip_address"></a> [sql\_database\_instance\_master\_private\_ip\_address](#output\_sql\_database\_instance\_master\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. |
+| <a name="output_sql_database_instance_master_public_ip_address"></a> [sql\_database\_instance\_master\_public\_ip\_address](#output\_sql\_database\_instance\_master\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. |
+| <a name="output_sql_database_instance_master_self_link"></a> [sql\_database\_instance\_master\_self\_link](#output\_sql\_database\_instance\_master\_self\_link) | The URI of the created resource. |
+| <a name="output_sql_database_instance_master_service_account_email_address"></a> [sql\_database\_instance\_master\_service\_account\_email\_address](#output\_sql\_database\_instance\_master\_service\_account\_email\_address) | The service account email address assigned to the instance. |
+| <a name="output_sql_database_instance_read_replica_connection_name"></a> [sql\_database\_instance\_read\_replica\_connection\_name](#output\_sql\_database\_instance\_read\_replica\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_sql_database_instance_read_replica_first_ip_address"></a> [sql\_database\_instance\_read\_replica\_first\_ip\_address](#output\_sql\_database\_instance\_read\_replica\_first\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_sql_database_instance_read_replica_instance_name"></a> [sql\_database\_instance\_read\_replica\_instance\_name](#output\_sql\_database\_instance\_read\_replica\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_sql_database_instance_read_replica_private_ip_address"></a> [sql\_database\_instance\_read\_replica\_private\_ip\_address](#output\_sql\_database\_instance\_read\_replica\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. |
+| <a name="output_sql_database_instance_read_replica_public_ip_address"></a> [sql\_database\_instance\_read\_replica\_public\_ip\_address](#output\_sql\_database\_instance\_read\_replica\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. |
+| <a name="output_sql_database_instance_read_replica_self_link"></a> [sql\_database\_instance\_read\_replica\_self\_link](#output\_sql\_database\_instance\_read\_replica\_self\_link) | The URI of the created resource. |
+| <a name="output_sql_database_instance_read_replica_service_account_email_address"></a> [sql\_database\_instance\_read\_replica\_service\_account\_email\_address](#output\_sql\_database\_instance\_read\_replica\_service\_account\_email\_address) | The service account email address assigned to the instance. |
+| <a name="output_sql_database_master_id"></a> [sql\_database\_master\_id](#output\_sql\_database\_master\_id) | an identifier for the resource with format projects/{{project}}/instances/{{instance}}/databases/{{name}} |
+| <a name="output_sql_database_master_self_link"></a> [sql\_database\_master\_self\_link](#output\_sql\_database\_master\_self\_link) | The URI of the created resource. |
+| <a name="output_sql_user_name"></a> [sql\_user\_name](#output\_sql\_user\_name) | The name of the user. |
+| <a name="output_sql_user_password"></a> [sql\_user\_password](#output\_sql\_user\_password) | The password for the user |
+| <a name="output_sql_user_type"></a> [sql\_user\_type](#output\_sql\_user\_type) | The user type |
 <!-- END_TF_DOCS -->
