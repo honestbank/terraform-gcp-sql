@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         tests: [ "test-terratest" ]
-        tmp_tests: [ "create_mysql_instance_with_public_ip", "create_mysql_instance_with_private_ip", "mysql_instance_with_read_replica" ]
+#        tmp_tests: [ "create_mysql_instance_with_public_ip", "create_mysql_instance_with_private_ip", "mysql_instance_with_read_replica" ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
