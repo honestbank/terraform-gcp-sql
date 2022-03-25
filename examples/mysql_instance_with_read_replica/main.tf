@@ -48,10 +48,10 @@ module "sql_database_instance" {
   settings_ip_configuration_private_network = module.google_compute_network_private_network.id
 
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL"
-  settings_ip_configuration_require_ssl     = false
+  settings_ip_configuration_require_ssl = false
 
-  settings_tier                             = var.settings_tier
-  deletion_protection                       = false
+  settings_tier       = var.settings_tier
+  deletion_protection = false
 
   enable_read_replica                                 = true
   read_replica_settings_ip_configuration_ipv4_enabled = true
