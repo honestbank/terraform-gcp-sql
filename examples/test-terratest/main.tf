@@ -42,5 +42,17 @@ resource "google_sql_database_instance" "main" {
 
   settings {
     tier = "db-f1-micro"
+
+    backup_configuration {
+      enabled            = true
+      binary_log_enabled = true
+    }
+
+    ip_configuration {
+      require_ssl = true
+      
+      #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP - default value is false
+      ipv4_enabled = true
+    }
   }
 }
