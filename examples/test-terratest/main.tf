@@ -38,6 +38,8 @@ resource "google_sql_database_instance" "main" {
   database_version = "MYSQL_8_0"
   region           = var.google_region
 
+  deletion_protection = false
+
   settings {
     tier = "db-f1-micro"
   }
