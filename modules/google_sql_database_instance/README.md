@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | 4.14.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.14.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.0.0 |
 
 ## Modules
 
@@ -19,7 +19,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google_sql_database_instance.instance](https://registry.terraform.io/providers/hashicorp/google/4.14.0/docs/resources/sql_database_instance) | resource |
+| [google_sql_database_instance.instance](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance) | resource |
+| [google_sql_database_instance.read_replica](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance) | resource |
 
 ## Inputs
 
@@ -27,8 +28,11 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_database_version"></a> [database\_version](#input\_database\_version) | (Required) The MySQL or PostgreSQL version to use. Supported values include `MYSQL_5_6`, `MYSQL_5_7`, `MYSQL_8_0`, `POSTGRES_9_6`,`POSTGRES_10`, `POSTGRES_11`, `POSTGRES_12`, `POSTGRES_13` | `string` | `"MYSQL_8_0"` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | (Optional, Default: `true` ) Whether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply command that deletes the instance will fail. | `bool` | `true` | no |
+| <a name="input_enable_read_replica"></a> [enable\_read\_replica](#input\_enable\_read\_replica) | Enable or Disable Read Replica | `bool` | `false` | no |
 | <a name="input_master_instance_name"></a> [master\_instance\_name](#input\_master\_instance\_name) | (Optional) The name of the existing instance that will act as the master in the replication setup. Note, this requires the master to have `binary_log_enabled` set, as well as existing backups. | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Optional, Computed) The name of the instance. If the name is left blank, Terraform will randomly generate one when the instance is first created. This is done because after a name is used, it cannot be reused for up to one week. | `string` | `""` | no |
+| <a name="input_read_replica_settings_ip_configuration_ipv4_enabled"></a> [read\_replica\_settings\_ip\_configuration\_ipv4\_enabled](#input\_read\_replica\_settings\_ip\_configuration\_ipv4\_enabled) | Whether this Cloud SQL instance should be assigned a public IPV4 address. At least `ipv4_enabled` must be enabled or a `private_network` must be configured. | `bool` | `false` | no |
+| <a name="input_read_replica_settings_tier"></a> [read\_replica\_settings\_tier](#input\_read\_replica\_settings\_tier) | (Required) The machine type to use. See tiers for more details and supported versions. Postgres supports only shared-core machine types, and custom machine types | `string` | `""` | no |
 | <a name="input_region"></a> [region](#input\_region) | (Optional) The region the instance will sit in | `string` | `""` | no |
 | <a name="input_settings_availability_type"></a> [settings\_availability\_type](#input\_settings\_availability\_type) | (Optional, Default: `ZONAL`) The availability type of the Cloud SQL instance, high availability (`REGIONAL`) or single zone (`ZONAL`) | `string` | `"ZONAL"` | no |
 | <a name="input_settings_backup_configuration_binary_log_enabled"></a> [settings\_backup\_configuration\_binary\_log\_enabled](#input\_settings\_backup\_configuration\_binary\_log\_enabled) | (Optional) True if binary logging is enabled. Cannot be used with Postgres. | `bool` | `true` | no |
@@ -49,6 +53,17 @@ No modules.
 | <a name="output_connection_name"></a> [connection\_name](#output\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_first_ip_address"></a> [first\_ip\_address](#output\_first\_ip\_address) | The IPv4 address assigned. |
 | <a name="output_instance_name"></a> [instance\_name](#output\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_private_ip_address"></a> [private\_ip\_address](#output\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
+| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
+| <a name="output_read_replica_connection_name"></a> [read\_replica\_connection\_name](#output\_read\_replica\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_read_replica_first_ip_address"></a> [read\_replica\_first\_ip\_address](#output\_read\_replica\_first\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_read_replica_instance_name"></a> [read\_replica\_instance\_name](#output\_read\_replica\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_read_replica_ip_address"></a> [read\_replica\_ip\_address](#output\_read\_replica\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_read_replica_private_ip_address"></a> [read\_replica\_private\_ip\_address](#output\_read\_replica\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
+| <a name="output_read_replica_public_ip_address"></a> [read\_replica\_public\_ip\_address](#output\_read\_replica\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
+| <a name="output_read_replica_self_link"></a> [read\_replica\_self\_link](#output\_read\_replica\_self\_link) | The URI of the created resource. |
+| <a name="output_read_replica_service_account_email_address"></a> [read\_replica\_service\_account\_email\_address](#output\_read\_replica\_service\_account\_email\_address) | The service account email address assigned to the instance. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The URI of the created resource. |
 | <a name="output_service_account_email_address"></a> [service\_account\_email\_address](#output\_service\_account\_email\_address) | The service account email address assigned to the instance. |
 <!-- END_TF_DOCS -->

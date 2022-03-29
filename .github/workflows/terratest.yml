@@ -11,13 +11,14 @@ env:
   TERRATEST_GOOGLE_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
   GOOGLE_CLOUD_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
   TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
-  TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
   TF_VAR_google_region: ${{ secrets.TERRATEST_GOOGLE_REGION }}
+  TF_LOG: ${{ secrets.TF_LOG }}
 
 jobs:
   terratest:
     name: terratest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
@@ -29,9 +30,6 @@ jobs:
         with:
           go-version: 1.17
         id: go
-
-      - name: prepare test environment
-        run: source ./test/prepare-test-environment.sh
 
       - id: "google-cloud-auth"
         name: Google Cloud Auth

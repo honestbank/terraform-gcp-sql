@@ -28,6 +28,16 @@ output "test_terraform_sql_first_ip_address" {
   value       = module.test_sql_database_instance.first_ip_address
 }
 
+output "test_sql_database_instance_private_ip_private_ip_address" {
+  description = "The first private (`PRIVATE`) IPv4 address assigned."
+  value       = module.test_sql_database_instance.private_ip_address
+}
+
+output "test_sql_database_instance_private_ip_public_ip_address" {
+  description = "The first public (`PRIMARY`) IPv4 address assigned."
+  value       = module.test_sql_database_instance.public_ip_address
+}
+
 output "test_sql_database_1_self_link" {
   description = "The URI of the created resource."
   value       = module.test_sql_database_1.self_link

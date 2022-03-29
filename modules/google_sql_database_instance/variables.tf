@@ -44,6 +44,12 @@ variable "settings_tier" {
   }
 }
 
+variable "read_replica_settings_tier" {
+  description = "(Required) The machine type to use. See tiers for more details and supported versions. Postgres supports only shared-core machine types, and custom machine types"
+  type        = string
+  default     = ""
+}
+
 variable "settings_availability_type" {
   description = "(Optional, Default: `ZONAL`) The availability type of the Cloud SQL instance, high availability (`REGIONAL`) or single zone (`ZONAL`)"
   type        = string
@@ -106,8 +112,20 @@ variable "settings_ip_configuration_ipv4_enabled" {
   default     = false
 }
 
+variable "read_replica_settings_ip_configuration_ipv4_enabled" {
+  description = "Whether this Cloud SQL instance should be assigned a public IPV4 address. At least `ipv4_enabled` must be enabled or a `private_network` must be configured."
+  type        = bool
+  default     = false
+}
+
 variable "settings_ip_configuration_private_network" {
   description = "The VPC network from which the Cloud SQL instance is accessible for private IP. For example, projects/myProject/global/networks/default. Specifying a network enables private IP."
   type        = string
   default     = ""
+}
+
+variable "enable_read_replica" {
+  description = "Enable or Disable Read Replica"
+  type        = bool
+  default     = false
 }

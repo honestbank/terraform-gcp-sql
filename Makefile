@@ -2,17 +2,22 @@ lint:
 	terraform fmt --recursive
 
 validate: lint
-	terraform init
-	terraform validate
+	cd examples/create_mysql_instance_with_public_ip/; terraform init; terraform validate
+	cd examples/create_mysql_instance_with_private_ip/; terraform init; terraform validate
+	cd examples/mysql_instance_with_read_replica/; terraform init; terraform validate
+	cd examples/test-terratest/; terraform init; terraform validate
 
 docs:
 	terraform-docs -c .terraform-docs.yml .
-	cd example/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/create_mysql_instance_with_public_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/create_mysql_instance_with_private_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/mysql_instance_with_read_replica/; terraform-docs markdown . --output-file README.md --output-mode inject
+	cd examples/test-terratest/; terraform-docs markdown . --output-file README.md --output-mode inject
 
 commit: docs validate
 
 apply_and_destroy:
 	 terraform apply -auto-approve && terraform apply -auto-approve -destroy
 
-test:
-	cd test; go test -v -timeout 30m
+tests:
+	cd test; go clean -testcache; go test -v -timeout 60m

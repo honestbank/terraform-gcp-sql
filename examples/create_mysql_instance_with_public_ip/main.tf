@@ -8,9 +8,9 @@ resource "random_id" "random_string" {
 
 module "test_sql_database_instance" {
 
-  source = "../modules/google_sql_database_instance"
+  source = "../../modules/google_sql_database_instance"
 
-  name = "sql-instance-${random_id.instance_suffix.hex}"
+  name = "sql-public-${random_id.instance_suffix.hex}"
 
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
@@ -22,21 +22,33 @@ module "test_sql_database_instance" {
 }
 
 module "test_sql_database_1" {
-  source = "../modules/google_sql_database"
+  source = "../../modules/google_sql_database"
+
+  depends_on = [
+    module.test_sql_user
+  ]
 
   instance_name = module.test_sql_database_instance.instance_name
   name          = var.database_name_1
 }
 
 module "test_sql_database_2" {
-  source = "../modules/google_sql_database"
+  source = "../../modules/google_sql_database"
+
+  depends_on = [
+    module.test_sql_user
+  ]
 
   instance_name = module.test_sql_database_instance.instance_name
   name          = var.database_name_2
 }
 
 module "test_sql_user" {
-  source        = "../modules/google_sql_user"
+  depends_on = [
+    module.test_sql_database_instance
+  ]
+
+  source        = "../../modules/google_sql_user"
   instance_name = module.test_sql_database_instance.instance_name
   name          = var.user_name
   password      = random_id.random_string.hex
