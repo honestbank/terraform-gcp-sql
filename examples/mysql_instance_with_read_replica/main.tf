@@ -44,7 +44,7 @@ module "sql_database_instance" {
   # Requirements for using the Cloud SQL Auth proxy
   # https://cloud.google.com/sql/docs/mysql/sql-proxy#requirements
 
-  settings_ip_configuration_ipv4_enabled    = true
+  settings_ip_configuration_ipv4_enabled    = false
   settings_ip_configuration_private_network = module.google_compute_network_private_network.id
 
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL"

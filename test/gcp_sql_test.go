@@ -1,7 +1,6 @@
 package test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -20,7 +19,6 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		// retryable errors in terraform testing.
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: testDirectory,
-			EnvVars:      map[string]string{"TF_LOG": os.Getenv("TF_LOG")},
 		})
 
 		defer terraform.Destroy(t, terraformOptions)
@@ -44,7 +42,7 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		output = terraform.Output(t, terraformOptions, "test_terraform_sql_connection_name")
 		assert.NotEmpty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_user_name")
+		output = terraform.Output(t, terraformOptions, "test_sql_user_name")
 		assert.Equal(t, output, "sql-user")
 
 		output = terraform.Output(t, terraformOptions, "test_sql_database_1_id")
@@ -56,7 +54,7 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_public_ip_address")
 		assert.NotEmpty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_private_ip_address")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_private_ip_address")
 		assert.Empty(t, output)
 	})
 
@@ -68,7 +66,6 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		// retryable errors in terraform testing.
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: testDirectory,
-			EnvVars:      map[string]string{"TF_LOG": os.Getenv("TF_LOG")},
 		})
 
 		defer terraform.Destroy(t, terraformOptions)
@@ -80,28 +77,28 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		output = terraform.Output(t, terraformOptions, "random_string")
 		assert.NotEmpty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_instance_name")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_instance_name")
 		assert.Contains(t, output, "sql-private")
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_self_link")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_self_link")
 		assert.Contains(t, output, "sql-private")
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_service_account_email_address")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_service_account_email_address")
 		assert.NotEmpty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_connection_name")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_connection_name")
 		assert.NotEmpty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_user_name")
+		output = terraform.Output(t, terraformOptions, "test_sql_user_name")
 		assert.Equal(t, output, "sql-user")
 
-		output = terraform.Output(t, terraformOptions, "sql_database_master_id")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_id")
 		assert.Contains(t, output, "db-first")
 
 		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_public_ip_address")
 		assert.Empty(t, output)
 
-		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_private_ip_address")
+		output = terraform.Output(t, terraformOptions, "test_sql_database_instance_private_ip_private_ip_address")
 		assert.NotEmpty(t, output)
 	})
 
@@ -113,7 +110,6 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 		// retryable errors in terraform testing.
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: testDirectory,
-			EnvVars:      map[string]string{"TF_LOG": os.Getenv("TF_LOG")},
 		})
 
 		defer terraform.Destroy(t, terraformOptions)
@@ -150,6 +146,12 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 
 		output = terraform.Output(t, terraformOptions, "sql_database_master_id")
 		assert.Contains(t, output, "db-first")
+
+		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_public_ip_address")
+		assert.Empty(t, output)
+
+		output = terraform.Output(t, terraformOptions, "sql_database_instance_master_private_ip_address")
+		assert.NotEmpty(t, output)
 
 		output = terraform.Output(t, terraformOptions, "sql_database_instance_read_replica_public_ip_address")
 		assert.NotEmpty(t, output)
