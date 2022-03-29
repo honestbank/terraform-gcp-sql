@@ -8,8 +8,6 @@ terraform {
 }
 
 resource "google_compute_global_address" "default_network" {
-  #  provider = google-beta
-
   name          = var.name
   description   = var.description
   address_type  = var.address_type
