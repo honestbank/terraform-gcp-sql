@@ -66,7 +66,10 @@ resource "google_sql_database_instance" "read_replica" {
     disk_size             = var.settings_disk_size
     disk_autoresize       = var.settings_disk_autoresize
     disk_type             = var.settings_disk_type
-    availability_type     = var.settings_availability_type
+
+    # Not supported for Read Replica
+    availability_type     = "ZONAL"
+
     disk_autoresize_limit = var.settings_disk_autoresize_limit
 
     backup_configuration {
