@@ -50,6 +50,8 @@ module "sql_database_instance" {
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL"
   settings_ip_configuration_require_ssl = false
 
+  settings_availability_type = var.settings_availability_type
+
   settings_tier       = var.settings_tier
   deletion_protection = false
 

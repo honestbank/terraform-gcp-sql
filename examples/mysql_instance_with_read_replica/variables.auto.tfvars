@@ -7,7 +7,7 @@ user_type = "BUILT_IN"
 user_name = "sql-user"
 
 settings_tier                                    = "db-f1-micro"
-settings_availability_type                       = "ZONAL"
+settings_availability_type                       = "REGIONAL"
 settings_disk_size                               = 10
 settings_disk_type                               = "PD_SSD"
 settings_backup_configuration_enabled            = true
