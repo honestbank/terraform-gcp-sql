@@ -15,8 +15,8 @@ resource "google_bigquery_connection" "connection" {
     type        = "MYSQL"
 
     credential {
-      username = var.sql_user_name
-      password = var.sql_user_password
+      username = var.sql_user_credentials.user_name
+      password = var.sql_user_credentials.password
     }
   }
 }
