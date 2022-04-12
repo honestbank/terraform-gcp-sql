@@ -124,6 +124,12 @@ variable "settings_ip_configuration_private_network" {
   default     = ""
 }
 
+variable "settings_ip_configuration_allocated_ip_range" {
+  description = "(Optional) The name of the allocated ip range for the private ip CloudSQL instance. For example: `google-managed-services-default`. If set, the cloned instance ip will be created in the allocated range. The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long."
+  type        = string
+  default     = ""
+}
+
 variable "enable_read_replica" {
   description = "Enable or Disable Read Replica"
   type        = bool

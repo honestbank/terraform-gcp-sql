@@ -9,7 +9,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.16.0 |
 
 ## Modules
 
@@ -41,6 +41,7 @@ No modules.
 | <a name="input_settings_disk_autoresize_limit"></a> [settings\_disk\_autoresize\_limit](#input\_settings\_disk\_autoresize\_limit) | (Optional, Default: `0`) The maximum size, in GB, to which storage capacity can be automatically increased. The default value is `0`, which specifies that there is no limit. | `number` | `0` | no |
 | <a name="input_settings_disk_size"></a> [settings\_disk\_size](#input\_settings\_disk\_size) | (Optional, Default: `10`) The size of data disk, in GB. Size of a running instance cannot be reduced but can be increased. | `number` | `10` | no |
 | <a name="input_settings_disk_type"></a> [settings\_disk\_type](#input\_settings\_disk\_type) | (Optional, Default: `PD_SSD`) The type of data disk: `PD_SSD` or `PD_HDD`. | `string` | `"PD_SSD"` | no |
+| <a name="input_settings_ip_configuration_allocated_ip_range"></a> [settings\_ip\_configuration\_allocated\_ip\_range](#input\_settings\_ip\_configuration\_allocated\_ip\_range) | (Optional) The name of the allocated ip range for the private ip CloudSQL instance. For example: `google-managed-services-default`. If set, the cloned instance ip will be created in the allocated range. The range name must comply with RFC 1035. Specifically, the name must be 1-63 characters long. | `string` | `""` | no |
 | <a name="input_settings_ip_configuration_ipv4_enabled"></a> [settings\_ip\_configuration\_ipv4\_enabled](#input\_settings\_ip\_configuration\_ipv4\_enabled) | Whether this Cloud SQL instance should be assigned a public IPV4 address. At least `ipv4_enabled` must be enabled or a `private_network` must be configured. | `bool` | `false` | no |
 | <a name="input_settings_ip_configuration_private_network"></a> [settings\_ip\_configuration\_private\_network](#input\_settings\_ip\_configuration\_private\_network) | The VPC network from which the Cloud SQL instance is accessible for private IP. For example, projects/myProject/global/networks/default. Specifying a network enables private IP. | `string` | `""` | no |
 | <a name="input_settings_ip_configuration_require_ssl"></a> [settings\_ip\_configuration\_require\_ssl](#input\_settings\_ip\_configuration\_require\_ssl) | (Optional) Whether SSL connections over IP are enforced or not. | `bool` | `true` | no |
