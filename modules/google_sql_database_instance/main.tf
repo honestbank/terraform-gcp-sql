@@ -89,8 +89,7 @@ resource "google_sql_database_instance" "read_replica" {
       #tfsec:ignore:google-sql-no-public-access
       ipv4_enabled = var.read_replica_settings_ip_configuration_ipv4_enabled
 
-      private_network    = var.settings_ip_configuration_private_network
-      allocated_ip_range = var.settings_ip_configuration_allocated_ip_range
+      private_network = var.settings_ip_configuration_private_network
     }
   }
 
