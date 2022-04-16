@@ -7,6 +7,40 @@ terraform {
   }
 }
 
+locals {
+  is_postgres = replace(var.database_version, "POSTGRES_", "") != var.database_version
+
+  postgres_database_flags = [
+    {
+      # google-sql-enable-pg-temp-file-logging
+      name  = "log_temp_files"
+      value = "0"
+    },
+    {
+      # google-sql-pg-log-connections
+      name  = "log_connections"
+      value = "on"
+    },
+    {
+      # google-sql-pg-log-lock-waits
+      name  = "log_lock_waits"
+      value = "on"
+    },
+    {
+      # google-sql-pg-log-disconnections
+      name  = "log_disconnections"
+      value = "on"
+    },
+    {
+      # google-sql-pg-log-checkpoints
+      name  = "log_checkpoints"
+      value = "on"
+    },
+  ]
+  settings_backup_configuration_binary_log_enabled = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
+  database_flags                                   = local.is_postgres ? local.postgres_database_flags : []
+}
+
 resource "google_sql_database_instance" "instance" {
   database_version = var.database_version
 
@@ -26,7 +60,7 @@ resource "google_sql_database_instance" "instance" {
 
     backup_configuration {
       enabled            = var.settings_backup_configuration_enabled
-      binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
+      binary_log_enabled = local.settings_backup_configuration_binary_log_enabled
     }
 
     ip_configuration {
@@ -40,6 +74,15 @@ resource "google_sql_database_instance" "instance" {
       private_network    = var.settings_ip_configuration_private_network
       allocated_ip_range = var.settings_ip_configuration_allocated_ip_range
     }
+
+    dynamic "database_flags" {
+      for_each = local.database_flags
+      content {
+        name  = database_flags.value.name
+        value = database_flags.value.value
+      }
+    }
+
   }
 
   deletion_protection = var.deletion_protection
@@ -90,6 +133,14 @@ resource "google_sql_database_instance" "read_replica" {
       ipv4_enabled = var.read_replica_settings_ip_configuration_ipv4_enabled
 
       private_network = var.settings_ip_configuration_private_network
+    }
+
+    dynamic "database_flags" {
+      for_each = local.database_flags
+      content {
+        name  = database_flags.value.name
+        value = database_flags.value.value
+      }
     }
   }
 
