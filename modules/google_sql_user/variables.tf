@@ -12,6 +12,7 @@ variable "host" {
   description = "(Optional) The host the user can connect from. This is only supported for MySQL instances. Don't set this field for PostgreSQL instances. Can be an IP address. Changing this forces a new resource to be created."
   type        = string
   default     = "localhost"
+  nullable    = true
 }
 
 variable "password" {

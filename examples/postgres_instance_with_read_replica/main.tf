@@ -9,13 +9,13 @@ resource "random_id" "random_string" {
 module "google_compute_network_private_network" {
   source = "../../modules/google_compute_network"
 
-  name = "private-network-${random_id.instance_suffix.hex}"
+  name = "test-pn-${random_id.instance_suffix.hex}"
 }
 
 module "google_compute_global_address_private_ip" {
   source = "../../modules/google_compute_global_address"
 
-  name          = "private-ip-address-${random_id.instance_suffix.hex}"
+  name          = "test-private-ip-${random_id.instance_suffix.hex}"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
@@ -35,7 +35,7 @@ module "sql_database_instance" {
 
   name = "sql-rr-${random_id.instance_suffix.hex}"
   #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version"
-  database_version = "MYSQL_8_0"
+  database_version = "POSTGRES_13"
 
   depends_on = [module.google_service_networking_connection_private_vpc_connection]
 
@@ -83,6 +83,6 @@ module "sql_user" {
   instance_name = module.sql_database_instance.instance_name
   name          = var.user_name
   password      = random_id.random_string.hex
-  host          = "%"
+  host          = var.user_host
   type          = var.user_type
 }
