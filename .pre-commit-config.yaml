@@ -6,7 +6,7 @@
 
 repos:
   -   repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.1.0 # Get the latest from: https://github.com/pre-commit/pre-commit-hooks/releases
+      rev: v4.2.0 # Get the latest from: https://github.com/pre-commit/pre-commit-hooks/releases
       hooks:
         -   id: trailing-whitespace
         -   id: end-of-file-fixer
@@ -14,8 +14,8 @@ repos:
         -   id: check-added-large-files
         - id: detect-aws-credentials
           args: [ '--allow-missing-credentials' ]
-  - repo: git://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.64.1 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.68.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
     hooks:
       - id: terraform_fmt
       - id: terraform_docs
@@ -23,5 +23,5 @@ repos:
           - --args=--config=.terraform-docs.yml
       - id: terraform_validate
       - id: terraform_tfsec
-        exclude: 'test/*'
-      - id: checkov
+        exclude: 'test/'
+      - id: terraform_checkov
