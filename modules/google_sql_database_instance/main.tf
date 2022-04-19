@@ -10,35 +10,28 @@ terraform {
 locals {
   is_postgres = replace(var.database_version, "POSTGRES_", "") != var.database_version
 
-  postgres_database_flags = [
-    {
-      # google-sql-enable-pg-temp-file-logging
-      name  = "log_temp_files"
-      value = "0"
-    },
-    {
-      # google-sql-pg-log-connections
-      name  = "log_connections"
-      value = "on"
-    },
-    {
-      # google-sql-pg-log-lock-waits
-      name  = "log_lock_waits"
-      value = "on"
-    },
-    {
-      # google-sql-pg-log-disconnections
-      name  = "log_disconnections"
-      value = "on"
-    },
-    {
-      # google-sql-pg-log-checkpoints
-      name  = "log_checkpoints"
-      value = "on"
-    },
-  ]
+  mysql_database_flags = {
+    # enable Cloud SQL for MySQL Audit Plugin - https://cloud.google.com/sql/docs/mysql/use-db-audit#audit_plugin_settings
+    cloudsql_mysql_audit = "ON"
+  }
+
+  postgres_database_flags = {
+    # google-sql-enable-pg-temp-file-logging
+    log_temp_files = "0"
+    # google-sql-pg-log-connections
+    log_connections = "on"
+    # google-sql-pg-log-lock-waits
+    log_lock_waits = "on"
+    # google-sql-pg-log-disconnections
+    log_disconnections = "on"
+    # google-sql-pg-log-checkpoints
+    log_checkpoints = "on"
+  }
+
   settings_backup_configuration_binary_log_enabled = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
-  database_flags                                   = local.is_postgres ? local.postgres_database_flags : []
+
+  tmp_database_flags    = local.is_postgres ? local.postgres_database_flags : local.mysql_database_flags
+  custom_database_flags = merge(local.tmp_database_flags, var.settings_database_flags)
 }
 
 resource "google_sql_database_instance" "instance" {
@@ -76,10 +69,12 @@ resource "google_sql_database_instance" "instance" {
     }
 
     dynamic "database_flags" {
-      for_each = local.database_flags
+      iterator = flag
+      for_each = local.custom_database_flags
+
       content {
-        name  = database_flags.value.name
-        value = database_flags.value.value
+        name  = flag.key
+        value = flag.value
       }
     }
 
@@ -136,10 +131,12 @@ resource "google_sql_database_instance" "read_replica" {
     }
 
     dynamic "database_flags" {
-      for_each = local.database_flags
+      iterator = flag
+      for_each = local.custom_database_flags
+
       content {
-        name  = database_flags.value.name
-        value = database_flags.value.value
+        name  = flag.key
+        value = flag.value
       }
     }
   }

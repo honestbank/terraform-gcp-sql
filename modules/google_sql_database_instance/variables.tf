@@ -130,6 +130,12 @@ variable "settings_ip_configuration_allocated_ip_range" {
   default     = ""
 }
 
+variable "settings_database_flags" {
+  description = "List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
+  type        = map(any)
+  default     = {}
+}
+
 variable "enable_read_replica" {
   description = "Enable or Disable Read Replica"
   type        = bool
