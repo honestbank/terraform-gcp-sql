@@ -49,4 +49,3 @@ variable "settings_ip_configuration_require_ssl" {
   type        = bool
   default     = true
 }
-
