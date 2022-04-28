@@ -128,8 +128,8 @@ resource "local_sensitive_file" "enable_audit_log" {
   file_permission = "0755"
   content         = <<EOF
 #!/bin/bash
-mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < combined.sql | grep "CALL" > rules.sql
-mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < rules.sql
+mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < combined.sql | grep "CALL" > rules.sql
+mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < rules.sql
 EOF
 }
 
@@ -146,6 +146,15 @@ resource "null_resource" "run-enable-database-audit-log" {
     local_sensitive_file.enable_audit_log,
     module.sql_database
   ]
+
+  provisioner "local-exec" {
+    command = <<EOF
+curl -o mysql-client.tar.xz ${var.mysql_client_url}
+tar -xf mysql-client.tar.xz
+mv mysql*-minimal mysql-client
+mysql-client/bin/mysql --version
+EOF
+  }
 
   provisioner "local-exec" {
     command = <<EOF

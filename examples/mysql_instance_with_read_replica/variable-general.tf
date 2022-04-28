@@ -18,3 +18,9 @@ variable "cloud_sql_proxy_url" {
   type        = string
   default     = "https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64"
 }
+
+variable "mysql_client_url" {
+  description = "Download the MySQL Community https://dev.mysql.com/downloads/mysql/"
+  type        = string
+  default     = "https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.29-linux-glibc2.17-x86_64-minimal.tar.xz"
+}
