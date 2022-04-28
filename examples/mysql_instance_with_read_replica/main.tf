@@ -88,13 +88,13 @@ module "sql_user" {
 }
 
 resource "local_sensitive_file" "google_credentials" {
-  filename        = "${path.module}/credentials.json"
+  filename        = "credentials.json"
   file_permission = "0600"
   content         = var.google_credentials
 }
 
 resource "local_file" "combined_sql" {
-  filename        = "${path.module}/combined.sql"
+  filename        = "combined.sql"
   file_permission = "0600"
   content         = <<EOF
 SELECT (CASE
@@ -124,23 +124,14 @@ EOF
 }
 
 resource "local_sensitive_file" "enable_audit_log" {
-  filename        = "${path.module}/enable-audit-log.sh"
-  file_permission = "0700"
+  filename        = "enable-audit-log.sh"
+  file_permission = "0755"
   content         = <<EOF
-#!/bin/zsh
-mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < ${path.module}/combined.sql | grep "CALL" > rules.sql
+#!/bin/bash
+mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < combined.sql | grep "CALL" > rules.sql
 mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < rules.sql
 EOF
 }
-
-#resource "null_resource" "download_cloud_sql_proxy" {
-#  provisioner "local-exec" {
-#    command = <<EOF
-#curl -o cloud_sql_proxy ${var.cloud_sql_proxy_url}
-#chmod +x cloud_sql_proxy
-#EOF
-#  }
-#}
 
 resource "null_resource" "run-enable-database-audit-log" {
   count = 1
@@ -169,7 +160,9 @@ nohup ./cloud_sql_proxy -dir /tmp -credential_file=${local_sensitive_file.google
 serverPID=$!
 echo "cloud_sql_proxy: $serverPID"
 sleep 5
-${local_sensitive_file.enable_audit_log.filename}
+echo ${local_sensitive_file.enable_audit_log.content} > enable-audit-log.sh
+chmod +x enable-audit-log.sh
+./enable-audit-log.sh
 kill $serverPID
 EOF
   }
