@@ -93,8 +93,8 @@ resource "local_sensitive_file" "google_credentials" {
   content         = var.google_credentials
 }
 
-resource "local_file" "combined_sql" {
-  filename        = "combined.sql"
+resource "local_file" "create_and_delete_audit_log" {
+  filename        = "create_and_delete_audit_log.sql"
   file_permission = "0600"
   content         = <<EOF
 SELECT (CASE
@@ -123,13 +123,44 @@ EOF
 
 }
 
+resource "local_file" "check_audit_log" {
+  filename        = "check_audit_log.sql"
+  file_permission = "0600"
+  content         = <<EOF
+SELECT (CASE
+            WHEN id = (SELECT MIN(id)
+                       FROM audit_log_rules
+                       WHERE CONCAT(`username`, `dbname`, `object`, `operation`, `op_result`) = '****B'
+                       ORDER BY id) THEN CONCAT("OK-ID", `id`, "-", `username`, `dbname`, `object`, `operation`, `op_result`)
+            ELSE CONCAT("ERR-ID", `id`, "-", `username`, `dbname`, `object`, `operation`, `op_result`)
+    END) AS `result`
+FROM audit_log_rules;
+
+EOF
+}
+
 resource "local_sensitive_file" "enable_audit_log" {
   filename        = "enable-audit-log.sh"
   file_permission = "0755"
   content         = <<EOF
 #!/bin/bash
-mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < combined.sql | grep "CALL" > rules.sql
+mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < check_audit_log.sql > result.txt
+echo "-------before-------"
+cat result.txt
+echo "--------------------"
+mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < create_and_delete_audit_log.sql | grep "CALL" > rules.sql
 mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < rules.sql
+mysql-client/bin/mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < check_audit_log.sql > result.txt
+echo "-------after-------"
+cat result.txt
+echo "-------------------"
+
+RESULT=`cat result.txt`
+if [[ "$RESULT" == "ERR-ID"* ]]; then
+  echo "found abnormal rules"
+  exit 1
+fi
+
 EOF
 }
 
@@ -142,7 +173,7 @@ resource "null_resource" "run-enable-database-audit-log" {
 
   depends_on = [
     local_sensitive_file.google_credentials,
-    local_file.combined_sql,
+    local_file.create_and_delete_audit_log,
     local_sensitive_file.enable_audit_log,
     module.sql_database
   ]
