@@ -46,7 +46,7 @@ module "sql_database_instance" {
   # Requirements for using the Cloud SQL Auth proxy
   # https://cloud.google.com/sql/docs/mysql/sql-proxy#requirements
 
-  settings_ip_configuration_ipv4_enabled    = false
+  settings_ip_configuration_ipv4_enabled    = true
   settings_ip_configuration_private_network = module.google_compute_network_private_network.id
 
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL"
@@ -57,7 +57,7 @@ module "sql_database_instance" {
   settings_tier       = var.settings_tier
   deletion_protection = false
 
-  enable_read_replica                                 = true
+  enable_read_replica                                 = false
   read_replica_settings_ip_configuration_ipv4_enabled = true
   read_replica_settings_tier                          = var.settings_tier
 }
@@ -85,4 +85,92 @@ module "sql_user" {
   password      = random_id.random_string.hex
   host          = "%"
   type          = var.user_type
+}
+
+resource "local_sensitive_file" "google_credentials" {
+  filename        = "${path.module}/credentials.json"
+  file_permission = "0600"
+  content         = var.google_credentials
+}
+
+resource "local_file" "combined_sql" {
+  filename        = "${path.module}/combined.sql"
+  file_permission = "0600"
+  content         = <<EOF
+SELECT (CASE
+            WHEN id <> (SELECT MIN(id)
+                        FROM audit_log_rules
+                        WHERE CONCAT(`username`, `dbname`, `object`, `operation`, `op_result`) = '****B'
+                        ORDER BY id) THEN CONCAT("CALL mysql.cloudsql_delete_audit_rule('", id, "',1,@outval,@outmsg);")
+            ELSE ""
+    END) AS `result`
+FROM audit_log_rules
+
+HAVING `result` <> ""
+
+UNION
+
+SELECT (CASE
+            WHEN count = 0 THEN "CALL mysql.cloudsql_create_audit_rule('*', '*', '*', '*', 'B', 1, @outval, @outmsg);"
+            ELSE ""
+    END) as `result`
+FROM (SELECT COUNT(1) AS COUNT
+      FROM `audit_log_rules`
+      WHERE CONCAT(`username`, `dbname`, `object`, `operation`, `op_result`) = '****B') as rule_count
+
+HAVING `result` <> "";
+EOF
+
+}
+
+resource "local_sensitive_file" "enable_audit_log" {
+  filename        = "${path.module}/enable-audit-log.sh"
+  file_permission = "0700"
+  content         = <<EOF
+#!/bin/zsh
+mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < ${path.module}/combined.sql | grep "CALL" > rules.sql
+mysql -h 127.0.0.1 -P 33069 -u ${module.sql_user.sql_user} -p${random_id.random_string.hex} mysql < rules.sql
+EOF
+}
+
+#resource "null_resource" "download_cloud_sql_proxy" {
+#  provisioner "local-exec" {
+#    command = <<EOF
+#curl -o cloud_sql_proxy ${var.cloud_sql_proxy_url}
+#chmod +x cloud_sql_proxy
+#EOF
+#  }
+#}
+
+resource "null_resource" "run-enable-database-audit-log" {
+  count = 1
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    local_sensitive_file.google_credentials,
+    local_file.combined_sql,
+    local_sensitive_file.enable_audit_log,
+    module.sql_database
+  ]
+
+  provisioner "local-exec" {
+    command = <<EOF
+curl -o cloud_sql_proxy ${var.cloud_sql_proxy_url}
+chmod +x cloud_sql_proxy
+EOF
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+nohup ./cloud_sql_proxy -dir /tmp -credential_file=${local_sensitive_file.google_credentials.filename} -instances=${var.google_project}:${var.google_region}:${module.sql_database_instance.instance_name}=tcp:0.0.0.0:33069 &
+serverPID=$!
+echo "cloud_sql_proxy: $serverPID"
+sleep 5
+${local_sensitive_file.enable_audit_log.filename}
+kill $serverPID
+EOF
+  }
 }
