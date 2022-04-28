@@ -165,17 +165,8 @@ EOF
 
   provisioner "local-exec" {
     command = <<EOF
-echo ${local_sensitive_file.enable_audit_log.content} > enable-audit-log2.sh
-chmod +x enable-audit-log2.sh
-EOF
-  }
-
-  provisioner "local-exec" {
-    command = <<EOF
-echo "enable-audit-log.sh"
-cat enable-audit-log.sh
-echo "enable-audit-log2.sh"
-cat enable-audit-log2.sh
+echo "enable-audit-log.sh" | wc
+cat enable-audit-log.sh | wc
 EOF
   }
 
@@ -185,11 +176,8 @@ nohup ./cloud_sql_proxy -dir /tmp -credential_file=${local_sensitive_file.google
 serverPID=$!
 echo "cloud_sql_proxy: $serverPID"
 sleep 5
-apk add mysql-client
 echo "enable-audit-log.sh"
 ./enable-audit-log.sh
-echo "enable-audit-log2.sh"
-./enable-audit-log2.sh
 kill $serverPID
 EOF
   }
