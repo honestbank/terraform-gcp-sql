@@ -102,3 +102,8 @@ output "sql_database_instance_read_replica_public_ip_address" {
   description = "The first public (`PRIMARY`) IPv4 address assigned."
   value       = module.sql_database_instance.read_replica_public_ip_address
 }
+
+output "result_database_audit_log" {
+  description = "Result of database audit log"
+  value       = data.local_file.result_database_audit_log.content
+}

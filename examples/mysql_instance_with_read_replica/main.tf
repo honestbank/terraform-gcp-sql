@@ -164,7 +164,7 @@ fi
 EOF
 }
 
-resource "null_resource" "run-enable-database-audit-log" {
+resource "null_resource" "run_enable_database_audit_log" {
   count = 1
 
   triggers = {
@@ -212,4 +212,9 @@ echo "enable-audit-log.sh"
 kill $serverPID
 EOF
   }
+}
+
+data "local_file" "result_database_audit_log" {
+  depends_on = [null_resource.run_enable_database_audit_log]
+  filename   = "result.txt"
 }
