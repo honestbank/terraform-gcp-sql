@@ -95,9 +95,33 @@ variable "settings_backup_configuration_enabled" {
 }
 
 variable "settings_backup_configuration_binary_log_enabled" {
-  description = "(Optional) True if binary logging is enabled. Cannot be used with Postgres."
+  description = "(Optional) True if binary logging is enabled. Cannot be used with PostgreSQL."
   type        = bool
   default     = true
+}
+
+variable "settings_backup_configuration_point_in_time_recovery_enabled" {
+  description = "(Optional) True if Point-in-time recovery is enabled. Will restart database if enabled after instance creation. Valid only for PostgresSQL instances"
+  type        = bool
+  default     = true
+}
+
+variable "settings_backup_configuration_transaction_log_retention_days" {
+  description = "(Optional) The number of days of transaction logs we retain for point in time restore, from 1-7."
+  type        = number
+  default     = 7
+}
+
+variable "settings_backup_configuration_start_time" {
+  description = "(Optional) HH:MM format time indicating when backup configuration starts."
+  type        = string
+  default     = "03:00"
+}
+
+variable "settings_backup_configuration_backup_retention_settings_retained_backups" {
+  description = "(Optional) Depending on the value of retention_unit, this is used to determine if a backup needs to be deleted. If retention_unit is 'COUNT', we will retain this many backups"
+  type        = number
+  default     = 7
 }
 
 variable "settings_ip_configuration_require_ssl" {
