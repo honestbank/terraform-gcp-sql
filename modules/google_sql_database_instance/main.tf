@@ -58,7 +58,7 @@ resource "google_sql_database_instance" "instance" {
       enabled            = var.settings_backup_configuration_enabled
       binary_log_enabled = local.settings_backup_configuration_binary_log_enabled
 
-      start_time                     = var.settings_backup_configuration_start_time
+      start_time                     = var.settings_backup_configuration_start_time_in_utc
       point_in_time_recovery_enabled = local.settings_backup_configuration_point_in_time_recovery_enabled
       transaction_log_retention_days = var.settings_backup_configuration_transaction_log_retention_days
 

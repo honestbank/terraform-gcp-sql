@@ -43,6 +43,10 @@ module "sql_database_instance" {
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
 
+  settings_backup_configuration_start_time_in_utc                          = "03:00"
+  settings_backup_configuration_transaction_log_retention_days             = 5
+  settings_backup_configuration_backup_retention_settings_retained_backups = 10
+
   # Requirements for using the Cloud SQL Auth proxy
   # https://cloud.google.com/sql/docs/mysql/sql-proxy#requirements
 
