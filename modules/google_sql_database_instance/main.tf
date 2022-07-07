@@ -99,7 +99,7 @@ locals {
   instance_read_replica = var.name != "" ? "${var.name}-read-replica" : ""
 }
 
-#These setting will override from code
+#This is a component module - these setting will be overridden from the embedding module/repo.
 #tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "read_replica" {
   depends_on = [
