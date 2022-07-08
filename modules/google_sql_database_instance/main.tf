@@ -28,12 +28,15 @@ locals {
     log_checkpoints = "on"
   }
 
-  settings_backup_configuration_binary_log_enabled = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
+  settings_backup_configuration_binary_log_enabled             = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
+  settings_backup_configuration_point_in_time_recovery_enabled = local.is_postgres ? var.settings_backup_configuration_point_in_time_recovery_enabled : false
 
   tmp_database_flags    = local.is_postgres ? local.postgres_database_flags : local.mysql_database_flags
-  custom_database_flags = merge(local.tmp_database_flags, var.settings_database_flags)
+  custom_database_flags = merge(var.settings_database_flags, local.tmp_database_flags)
 }
 
+#These setting will override from code
+#tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "instance" {
   database_version = var.database_version
 
@@ -54,6 +57,15 @@ resource "google_sql_database_instance" "instance" {
     backup_configuration {
       enabled            = var.settings_backup_configuration_enabled
       binary_log_enabled = local.settings_backup_configuration_binary_log_enabled
+
+      start_time                     = var.settings_backup_configuration_start_time_in_utc
+      point_in_time_recovery_enabled = local.settings_backup_configuration_point_in_time_recovery_enabled
+      transaction_log_retention_days = var.settings_backup_configuration_transaction_log_retention_days
+
+      backup_retention_settings {
+        retained_backups = var.settings_backup_configuration_backup_retention_settings_retained_backups
+        retention_unit   = "COUNT"
+      }
     }
 
     ip_configuration {
@@ -87,6 +99,8 @@ locals {
   instance_read_replica = var.name != "" ? "${var.name}-read-replica" : ""
 }
 
+#This is a component module - these setting will be overridden from the embedding module/repo.
+#tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "read_replica" {
   depends_on = [
     google_sql_database_instance.instance

@@ -95,9 +95,41 @@ variable "settings_backup_configuration_enabled" {
 }
 
 variable "settings_backup_configuration_binary_log_enabled" {
-  description = "(Optional) True if binary logging is enabled. Cannot be used with Postgres."
+  description = "(Optional) True if binary logging is enabled. Cannot be used with PostgreSQL."
   type        = bool
   default     = true
+}
+
+variable "settings_backup_configuration_point_in_time_recovery_enabled" {
+  description = "(Optional) True if Point-in-time recovery is enabled. Will restart database if enabled after instance creation. Valid only for PostgresSQL instances"
+  type        = bool
+  default     = true
+}
+
+variable "settings_backup_configuration_transaction_log_retention_days" {
+  description = "(Optional) The number of days of transaction logs we retain for point in time restore, from 1-7."
+  type        = number
+  default     = 7
+  validation {
+    condition     = var.settings_backup_configuration_transaction_log_retention_days >= 1 && var.settings_backup_configuration_transaction_log_retention_days <= 7
+    error_message = " transaction log retention must be >= 1 day and <= 7 days."
+  }
+}
+
+variable "settings_backup_configuration_start_time_in_utc" {
+  description = "(Optional) HH:MM format time indicating when backup configuration starts in UTC time."
+  type        = string
+  default     = "19:00" // GMT+7 is 3AM
+  validation {
+    condition     = can(regex("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", var.settings_backup_configuration_start_time_in_utc))
+    error_message = " format time must be HH:MM."
+  }
+}
+
+variable "settings_backup_configuration_backup_retention_settings_retained_backups" {
+  description = "(Optional) Depending on the value of retention_unit, this is used to determine if a backup needs to be deleted. If retention_unit is 'COUNT', we will retain this many backups"
+  type        = number
+  default     = 7
 }
 
 variable "settings_ip_configuration_require_ssl" {

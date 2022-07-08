@@ -2,10 +2,10 @@ lint:
 	terraform fmt --recursive
 
 validate: lint
-	cd examples/create_mysql_instance_with_public_ip/; terraform init; terraform validate
-	cd examples/create_mysql_instance_with_private_ip/; terraform init; terraform validate
-	cd examples/mysql_instance_with_read_replica/; terraform init; terraform validate
-	cd examples/postgres_instance_with_read_replica/; terraform init; terraform validate
+	cd examples/create_mysql_instance_with_public_ip/; terraform init --upgrade; terraform validate
+	cd examples/create_mysql_instance_with_private_ip/; terraform init --upgrade; terraform validate
+	cd examples/mysql_instance_with_read_replica/; terraform init --upgrade; terraform validate
+	cd examples/postgres_instance_with_read_replica/; terraform init --upgrade; terraform validate
 
 docs:
 	terraform-docs -c .terraform-docs.yml .
