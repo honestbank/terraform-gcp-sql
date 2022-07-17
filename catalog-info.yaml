@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: terraform-gcp-sql
+  description: Terraform module for creating Cloud SQL in Google Cloud Platform
+  annotations:
+    github.com/project-slug: honestbank/terraform-gcp-sql
+    github.com/team-slug: honestbank/devops-engineers
+spec:
+  type: tf-module
+  lifecycle: prod
+  system: infrastructure
+  owner: group:devops-engineers
+  dependencyOf:
+    - resource:storage-infrastructure
+    - resource:terraform-gcp-bigquery
