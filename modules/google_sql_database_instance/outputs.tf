@@ -37,3 +37,8 @@ output "private_ip_address" {
   description = "The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config."
   value       = google_sql_database_instance.instance.private_ip_address
 }
+
+output "database_version" {
+  description = "Database version, such as MYSQL_8_0 or POSTGRES_*"
+  value       = google_sql_database_instance.instance.database_version
+}

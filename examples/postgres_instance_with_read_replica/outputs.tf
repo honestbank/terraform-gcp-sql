@@ -38,6 +38,11 @@ output "sql_database_instance_master_public_ip_address" {
   value       = module.sql_database_instance.public_ip_address
 }
 
+output "database_version" {
+  description = "Databaase instance version"
+  value       = module.sql_database_instance.database_version
+}
+
 output "sql_database_master_self_link" {
   description = "The URI of the created resource."
   value       = module.sql_database.self_link
