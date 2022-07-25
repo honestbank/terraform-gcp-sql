@@ -38,6 +38,11 @@ output "test_sql_database_instance_private_ip_public_ip_address" {
   value       = module.test_sql_database_instance_private_ip.public_ip_address
 }
 
+output "database_version" {
+  description = "The user type"
+  value       = module.test_sql_database_instance_private_ip.database_version
+}
+
 output "test_sql_database_self_link" {
   description = "The URI of the created resource."
   value       = module.test_sql_database.self_link

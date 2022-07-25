@@ -57,6 +57,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_connection_name"></a> [connection\_name](#output\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_database_version"></a> [database\_version](#output\_database\_version) | Database version, such as MYSQL\_8\_0 or POSTGRES\_* |
 | <a name="output_first_ip_address"></a> [first\_ip\_address](#output\_first\_ip\_address) | The IPv4 address assigned. |
 | <a name="output_instance_name"></a> [instance\_name](#output\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The IPv4 address assigned. |

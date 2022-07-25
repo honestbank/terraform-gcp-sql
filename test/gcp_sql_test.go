@@ -1,6 +1,7 @@
 package test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -216,5 +217,8 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 
 		output = terraform.Output(t, terraformOptions, "sql_database_instance_read_replica_private_ip_address")
 		assert.NotEmpty(t, output)
+
+		output = terraform.Output(t, terraformOptions, "database_version")
+		assert.True(t, strings.HasPrefix(output, "POSTGRES_"))
 	})
 }
