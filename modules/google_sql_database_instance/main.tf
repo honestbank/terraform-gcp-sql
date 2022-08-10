@@ -93,6 +93,10 @@ resource "google_sql_database_instance" "instance" {
   }
 
   deletion_protection = var.deletion_protection
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 locals {
