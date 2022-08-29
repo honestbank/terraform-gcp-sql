@@ -93,10 +93,14 @@ resource "google_sql_database_instance" "instance" {
   }
 
   deletion_protection = var.deletion_protection
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 locals {
-  instance_read_replica = var.name != "" ? "${var.name}-read-replica" : ""
+  instance_read_replica = var.name != "" ? "${google_sql_database_instance.instance.name}-read-replica" : ""
 }
 
 #This is a component module - these setting will be overridden from the embedding module/repo.
