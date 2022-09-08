@@ -38,6 +38,12 @@ locals {
 #These setting will override from code
 #tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "instance" {
+  #This is a component module - these setting will be overridden from the embedding module/repo.
+  #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
+  #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+
   database_version = var.database_version
 
   name   = var.name
@@ -106,6 +112,12 @@ locals {
 #This is a component module - these setting will be overridden from the embedding module/repo.
 #tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "read_replica" {
+  #This is a component module - these setting will be overridden from the embedding module/repo.
+  #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
+  #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
+  #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+
   depends_on = [
     google_sql_database_instance.instance
   ]
@@ -160,4 +172,8 @@ resource "google_sql_database_instance" "read_replica" {
   }
 
   deletion_protection = var.deletion_protection
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
