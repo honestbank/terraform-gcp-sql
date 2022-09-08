@@ -160,4 +160,8 @@ resource "google_sql_database_instance" "read_replica" {
   }
 
   deletion_protection = var.deletion_protection
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
