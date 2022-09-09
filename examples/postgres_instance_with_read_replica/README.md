@@ -53,6 +53,7 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_database_version"></a> [database\_version](#output\_database\_version) | Databaase instance version |
 | <a name="output_random_string"></a> [random\_string](#output\_random\_string) | Random string |
 | <a name="output_sql_database_instance_master_connection_name"></a> [sql\_database\_instance\_master\_connection\_name](#output\_sql\_database\_instance\_master\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_sql_database_instance_master_first_ip_address"></a> [sql\_database\_instance\_master\_first\_ip\_address](#output\_sql\_database\_instance\_master\_first\_ip\_address) | The IPv4 address assigned. |

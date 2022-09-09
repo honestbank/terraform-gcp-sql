@@ -53,6 +53,7 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_database_version"></a> [database\_version](#output\_database\_version) | The user type |
 | <a name="output_random_string"></a> [random\_string](#output\_random\_string) | Random string |
 | <a name="output_test_sql_database_id"></a> [test\_sql\_database\_id](#output\_test\_sql\_database\_id) | an identifier for the resource with format projects/{{project}}/instances/{{instance}}/databases/{{name}} |
 | <a name="output_test_sql_database_instance_private_ip_connection_name"></a> [test\_sql\_database\_instance\_private\_ip\_connection\_name](#output\_test\_sql\_database\_instance\_private\_ip\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |

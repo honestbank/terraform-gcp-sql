@@ -101,7 +101,11 @@ resource "google_sql_database_instance" "instance" {
   deletion_protection = var.deletion_protection
 
   lifecycle {
-    ignore_changes = [name]
+    ignore_changes = [
+      name,
+      settings.0.disk_size,
+      settings.0.tier,
+    ]
   }
 }
 
@@ -174,6 +178,10 @@ resource "google_sql_database_instance" "read_replica" {
   deletion_protection = var.deletion_protection
 
   lifecycle {
-    ignore_changes = [name]
+    ignore_changes = [
+      name,
+      settings.0.disk_size,
+      settings.0.tier,
+    ]
   }
 }
