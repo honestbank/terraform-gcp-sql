@@ -16,6 +16,11 @@ locals {
   }
 
   postgres_database_flags = {
+    "cloudsql.enable_pgaudit" = "on"
+    "pgaudit.log"             = "all"
+    "pgaudit.log_client"      = "on"
+    "pgaudit.log_level"       = "notice"
+    log_hostname              = "on"
     # google-sql-enable-pg-temp-file-logging
     log_temp_files = "0"
     # google-sql-pg-log-connections
@@ -43,6 +48,10 @@ resource "google_sql_database_instance" "instance" {
   #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
   #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
   #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+  #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases 'log_hostname' flag is set to 'on'
+  #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower 'pgaudit.log_level' flag is set to 'notice'
+  #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database 'cloudsql.enable_pgaudit' flag is set to 'on'
+  #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
 
   database_version = var.database_version
 
@@ -121,6 +130,10 @@ resource "google_sql_database_instance" "read_replica" {
   #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
   #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
   #checkov:skip=CKV_GCP_54:Ensure PostgreSQL database 'log_lock_waits' flag is set to 'on'
+  #checkov:skip=CKV_GCP_108:Ensure hostnames are logged for GCP PostgreSQL databases 'log_hostname' flag is set to 'on'
+  #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower 'pgaudit.log_level' flag is set to 'notice'
+  #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database 'cloudsql.enable_pgaudit' flag is set to 'on'
+  #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
 
   depends_on = [
     google_sql_database_instance.instance
