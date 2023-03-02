@@ -1,7 +1,10 @@
-name: "Checkov GitHub Action"
+name: "checkov"
+permissions: read-all
+
 on:
   pull_request:
-    branches: [test, dev, qa, prod, main]
+    branches:
+      - main
 
 jobs:
   checkov:
@@ -17,5 +20,4 @@ jobs:
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
-          download_external_modules: true # optional: download external terraform modules from public git repositories and terraform registry
-          quiet: true # optional: display only failed checks
+          config_file: ".checkov.yaml"

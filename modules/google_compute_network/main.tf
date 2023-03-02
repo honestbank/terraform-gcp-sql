@@ -8,6 +8,9 @@ terraform {
 }
 
 resource "google_compute_network" "vpc_network" {
+  # This is a component module - these setting will be overridden from the embedding module/repo.
+  #checkov:skip=CKV2_GCP_18:Ensure GCP network defines a firewall and does not use the default firewall
+
   name        = var.name
   description = var.description
 
