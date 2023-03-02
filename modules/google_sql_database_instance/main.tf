@@ -21,6 +21,7 @@ locals {
     "pgaudit.log_client"      = "on"
     "pgaudit.log_level"       = "notice"
     log_hostname              = "on"
+    log_duration              = "on"
     # google-sql-enable-pg-temp-file-logging
     log_temp_files = "0"
     # google-sql-pg-log-connections
@@ -41,9 +42,13 @@ locals {
 }
 
 #These setting will override from code
-#tfsec:ignore:google-sql-enable-pg-temp-file-logging tfsec:ignore:google-sql-pg-log-connections tfsec:ignore:google-sql-pg-log-lock-waits tfsec:ignore:google-sql-pg-log-disconnections tfsec:ignore:google-sql-pg-log-checkpoints
+#tfsec:ignore:google-sql-enable-pg-temp-file-logging
+#tfsec:ignore:google-sql-pg-log-connections
+#tfsec:ignore:google-sql-pg-log-lock-waits
+#tfsec:ignore:google-sql-pg-log-disconnections
+#tfsec:ignore:google-sql-pg-log-checkpoints
 resource "google_sql_database_instance" "instance" {
-  #This is a component module - these setting will be overridden from the embedding module/repo.
+  # This is a component module - these setting will be overridden from the embedding module/repo.
   #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
   #checkov:skip=CKV_GCP_52:Ensure PostgreSQL database 'log_connections' flag is set to 'on'
   #checkov:skip=CKV_GCP_53:Ensure PostgreSQL database 'log_disconnections' flag is set to 'on'
@@ -52,6 +57,8 @@ resource "google_sql_database_instance" "instance" {
   #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower 'pgaudit.log_level' flag is set to 'notice'
   #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database 'cloudsql.enable_pgaudit' flag is set to 'on'
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
+  #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
+  #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
 
   database_version = var.database_version
 
@@ -134,6 +141,8 @@ resource "google_sql_database_instance" "read_replica" {
   #checkov:skip=CKV_GCP_109:Ensure the GCP PostgreSQL database log levels are set to ERROR or lower 'pgaudit.log_level' flag is set to 'notice'
   #checkov:skip=CKV_GCP_110:Ensure pgAudit is enabled for your GCP PostgreSQL database 'cloudsql.enable_pgaudit' flag is set to 'on'
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
+  #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
+  #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
 
   depends_on = [
     google_sql_database_instance.instance
