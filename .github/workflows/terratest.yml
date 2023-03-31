@@ -15,6 +15,7 @@ env:
   TF_VAR_google_project: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
   TF_VAR_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
   TF_VAR_shared_vpc_host_google_credentials: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
+  TF_VAR_google_region: "asia-southeast2"
 jobs:
   terratest:
     name: terratest
