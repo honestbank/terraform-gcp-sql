@@ -2,12 +2,18 @@ name: terratest
 permissions: read-all
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
+    paths:
+      - 'modules/**'
+      - 'examples/**'
+      - 'test/**'
   push:
     branches:
       - main
+
 env:
   TERRATEST_GOOGLE_CREDENTIALS: ${{ secrets.TERRATEST_GOOGLE_CREDENTIALS }}
   GOOGLE_PROJECT: ${{ secrets.TERRATEST_GOOGLE_PROJECT }}
