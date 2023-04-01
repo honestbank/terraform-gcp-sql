@@ -23,3 +23,10 @@ repos:
         exclude: (test/|examples/)
       - id: terraform_checkov
         exclude: (test/|examples/)
+  - repo: https://github.com/gitguardian/ggshield
+    rev: v1.14.5 # Update to latest version by running `pre-commit autoupdate`
+    hooks:
+      - id: ggshield
+        language: python
+        stages: [commit]
+        args: [ 'secret', 'scan', 'pre-commit' ]

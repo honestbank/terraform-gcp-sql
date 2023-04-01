@@ -20,4 +20,4 @@ apply_and_destroy:
 	 terraform apply -auto-approve && terraform apply -auto-approve -destroy
 
 tests:
-	cd test; go clean -testcache; go test -v -timeout 60m
+	cd test; go clean -testcache; ./test.sh
