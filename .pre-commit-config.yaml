@@ -12,21 +12,22 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.1 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+    rev: v1.77.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
     hooks:
       - id: terraform_fmt
       - id: terraform_docs
       - id: terraform_validate
-        exclude: (test/|examples/)
       - id: terraform_tfsec
-        exclude: (test/|examples/)
+        exclude: "test/"
       - id: terraform_checkov
-        exclude: (test/|examples/)
-  - repo: https://github.com/gitguardian/ggshield
-    rev: v1.14.5 # Update to latest version by running `pre-commit autoupdate`
-    hooks:
-      - id: ggshield
-        language: python
-        stages: [commit]
-        args: [ 'secret', 'scan', 'pre-commit' ]
+        exclude: "test/"
+  -   repo: https://github.com/gitguardian/ggshield
+      rev: v1.14.2
+      hooks:
+        - id: ggshield
+          language: python
+          stages: [commit]
+          args: [ 'secret', 'scan', 'pre-commit' ]
