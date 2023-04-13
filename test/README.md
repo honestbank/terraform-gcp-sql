@@ -20,3 +20,11 @@ go test -v -timeout 150m
 
 Tests should always be performed in a separate project (and a separate account,
 if possible) to completely isolate live environments from any potential issues.
+
+## Updating Go Dependencies
+
+```go
+    cd test
+    go mod tidy
+    go get -t -u ./...
+```
