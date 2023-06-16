@@ -59,7 +59,6 @@ resource "google_sql_database_instance" "instance" {
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
   #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
   #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
-  #checkov:skip=CKV_GCP_79: "Ensure SQL database is using latest Major version"
 
   database_version = var.database_version
 
@@ -144,7 +143,6 @@ resource "google_sql_database_instance" "read_replica" {
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
   #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
   #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
-  #checkov:skip=CKV_GCP_79: "Ensure SQL database is using latest Major version"
 
   depends_on = [
     google_sql_database_instance.instance
