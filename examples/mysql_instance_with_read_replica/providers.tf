@@ -3,9 +3,9 @@
 # provider being missing.
 
 provider "google" {
-  project     = var.google_project
-  region      = var.google_region
-  credentials = var.google_credentials
+  project = var.google_project
+  region  = var.google_region
+  #credentials = var.google_credentials
 
   scopes = [
     # Default scopes
