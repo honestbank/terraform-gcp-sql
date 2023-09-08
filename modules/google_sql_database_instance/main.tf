@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.4"
+      version = "~> 4.48"
     }
   }
 }
@@ -104,7 +104,6 @@ resource "google_sql_database_instance" "instance" {
       query_plans_per_minute  = var.settings_insights_config_query_plans_per_minute
       record_application_tags = true
       record_client_address   = true
-
     }
 
     dynamic "database_flags" {
