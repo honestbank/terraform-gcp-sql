@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.0"
+      version = "~> 4.48"
     }
   }
 }
@@ -17,21 +17,16 @@ locals {
 
   postgres_database_flags = {
     "cloudsql.enable_pgaudit" = "on"
+    log_hostname              = "on"
+    log_duration              = "on"
+    log_temp_files            = "0"
+    log_connections           = "on"
+    log_lock_waits            = "on"
+    log_disconnections        = "on"
+    log_checkpoints           = "on"
     "pgaudit.log"             = "all"
     "pgaudit.log_client"      = "on"
     "pgaudit.log_level"       = "notice"
-    log_hostname              = "on"
-    log_duration              = "on"
-    # google-sql-enable-pg-temp-file-logging
-    log_temp_files = "0"
-    # google-sql-pg-log-connections
-    log_connections = "on"
-    # google-sql-pg-log-lock-waits
-    log_lock_waits = "on"
-    # google-sql-pg-log-disconnections
-    log_disconnections = "on"
-    # google-sql-pg-log-checkpoints
-    log_checkpoints = "on"
   }
 
   settings_backup_configuration_binary_log_enabled             = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
@@ -69,13 +64,13 @@ resource "google_sql_database_instance" "instance" {
   master_instance_name = var.master_instance_name
 
   settings {
-
-    tier                  = var.settings_tier
-    disk_size             = var.settings_disk_size
-    disk_autoresize       = var.settings_disk_autoresize
-    disk_type             = var.settings_disk_type
-    availability_type     = var.settings_availability_type
-    disk_autoresize_limit = var.settings_disk_autoresize_limit
+    availability_type           = var.settings_availability_type
+    deletion_protection_enabled = var.deletion_protection
+    disk_autoresize             = var.settings_disk_autoresize
+    disk_autoresize_limit       = var.settings_disk_autoresize_limit
+    disk_type                   = var.settings_disk_type
+    disk_size                   = var.settings_disk_size
+    tier                        = var.settings_tier
 
     backup_configuration {
       enabled            = var.settings_backup_configuration_enabled
@@ -103,6 +98,14 @@ resource "google_sql_database_instance" "instance" {
       allocated_ip_range = var.settings_ip_configuration_allocated_ip_range
     }
 
+    insights_config {
+      query_insights_enabled  = true
+      query_string_length     = var.settings_insights_config_query_string_length
+      query_plans_per_minute  = var.settings_insights_config_query_plans_per_minute
+      record_application_tags = true
+      record_client_address   = true
+    }
+
     dynamic "database_flags" {
       iterator = flag
       for_each = local.custom_database_flags
@@ -113,6 +116,11 @@ resource "google_sql_database_instance" "instance" {
       }
     }
 
+    maintenance_window {
+      day          = var.settings_maintenance_window_day
+      hour         = var.settings_maintenance_window_hour
+      update_track = "stable"
+    }
   }
 
   deletion_protection = var.deletion_protection
@@ -161,10 +169,11 @@ resource "google_sql_database_instance" "read_replica" {
 
   settings {
 
-    tier            = var.read_replica_settings_tier
-    disk_size       = var.settings_disk_size
-    disk_autoresize = var.settings_disk_autoresize
-    disk_type       = var.settings_disk_type
+    tier                        = var.read_replica_settings_tier
+    disk_size                   = var.settings_disk_size
+    disk_autoresize             = var.settings_disk_autoresize
+    disk_type                   = var.settings_disk_type
+    deletion_protection_enabled = var.deletion_protection
 
     # Not supported for Read Replica
     availability_type = "ZONAL"
