@@ -170,7 +170,7 @@ resource "google_sql_database_instance" "read_replica" {
   settings {
 
     tier                        = var.read_replica_settings_tier
-    disk_size                   = var.settings_disk_size
+    disk_size                   = var.settings_disk_autoresize ? null : var.settings_disk_size
     disk_autoresize             = var.settings_disk_autoresize
     disk_type                   = var.settings_disk_type
     deletion_protection_enabled = var.deletion_protection
