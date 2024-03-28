@@ -1,23 +1,19 @@
+commit: docs validate
+
+docs:
+	terraform-docs --lockfile=false -c .terraform-docs.yml .
+
+init:
+	git submodule update --init --recursive
+	terraform init -upgrade
+
 lint:
 	terraform fmt --recursive
 
-validate: lint
-	cd examples/create_mysql_instance_with_public_ip/; terraform init --upgrade; terraform validate
-	cd examples/create_mysql_instance_with_private_ip/; terraform init --upgrade; terraform validate
-	cd examples/mysql_instance_with_read_replica/; terraform init --upgrade; terraform validate
-	cd examples/postgres_instance_with_read_replica/; terraform init --upgrade; terraform validate
-
-docs:
-	terraform-docs -c .terraform-docs.yml .
-	cd examples/create_mysql_instance_with_public_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
-	cd examples/create_mysql_instance_with_private_ip/; terraform-docs markdown . --output-file README.md --output-mode inject
-	cd examples/mysql_instance_with_read_replica/; terraform-docs markdown . --output-file README.md --output-mode inject
-	cd examples/postgres_instance_with_read_replica/; terraform-docs markdown . --output-file README.md --output-mode inject
-
-commit: docs validate
-
-apply_and_destroy:
-	 terraform apply -auto-approve && terraform apply -auto-approve -destroy
-
 tests:
-	cd test; go clean -testcache; ./test.sh
+# Super long timeout since this Makefile will be used in various repositories
+	cd test; go clean -testcache; go test -v -timeout 60m
+
+validate: lint
+	terraform init --upgrade
+	terraform validate
