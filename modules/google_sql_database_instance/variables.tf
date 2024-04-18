@@ -162,6 +162,12 @@ variable "settings_ip_configuration_allocated_ip_range" {
   default     = ""
 }
 
+variable "settings_ip_configuration_enable_private_path_for_google_cloud_services" {
+  description = "(Optional) Whether Google Cloud services such as BigQuery are allowed to access data in this Cloud SQL instance over a private IP connection. SQLSERVER database type is not supported."
+  type        = string
+  default     = true
+}
+
 variable "settings_database_flags" {
   description = "List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
   type        = map(any)

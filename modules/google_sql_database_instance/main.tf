@@ -96,6 +96,7 @@ resource "google_sql_database_instance" "instance" {
 
       private_network    = var.settings_ip_configuration_private_network
       allocated_ip_range = var.settings_ip_configuration_allocated_ip_range
+      enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
     }
 
     insights_config {
@@ -195,6 +196,7 @@ resource "google_sql_database_instance" "read_replica" {
       ipv4_enabled = var.read_replica_settings_ip_configuration_ipv4_enabled
 
       private_network = var.settings_ip_configuration_private_network
+      enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
     }
 
     dynamic "database_flags" {
