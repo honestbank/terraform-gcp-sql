@@ -94,8 +94,8 @@ resource "google_sql_database_instance" "instance" {
       #tfsec:ignore:google-sql-no-public-access
       ipv4_enabled = var.settings_ip_configuration_ipv4_enabled
 
-      private_network    = var.settings_ip_configuration_private_network
-      allocated_ip_range = var.settings_ip_configuration_allocated_ip_range
+      private_network                               = var.settings_ip_configuration_private_network
+      allocated_ip_range                            = var.settings_ip_configuration_allocated_ip_range
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
     }
 
@@ -195,7 +195,7 @@ resource "google_sql_database_instance" "read_replica" {
       #tfsec:ignore:google-sql-no-public-access
       ipv4_enabled = var.read_replica_settings_ip_configuration_ipv4_enabled
 
-      private_network = var.settings_ip_configuration_private_network
+      private_network                               = var.settings_ip_configuration_private_network
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
     }
 
