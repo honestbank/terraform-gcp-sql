@@ -199,6 +199,14 @@ resource "google_sql_database_instance" "read_replica" {
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
     }
 
+    insights_config {
+      query_insights_enabled  = true
+      query_string_length     = var.settings_insights_config_query_string_length
+      query_plans_per_minute  = var.settings_insights_config_query_plans_per_minute
+      record_application_tags = true
+      record_client_address   = true
+    }
+
     dynamic "database_flags" {
       iterator = flag
       for_each = local.custom_database_flags
