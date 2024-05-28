@@ -35,5 +35,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_id"></a> [id](#output\_id) | an identifier for the resource with format projects/{{project}}/instances/{{instance}}/databases/{{name}} |
+| <a name="output_name"></a> [name](#output\_name) | The name of the database in the Cloud SQL instance. This does not include the project ID or instance name. |
 | <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The URI of the created resource. |
 <!-- END_TF_DOCS -->
