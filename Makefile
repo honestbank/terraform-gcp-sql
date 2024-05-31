@@ -11,7 +11,7 @@ docs:
 	terraform-docs --lockfile=false -c .terraform-docs.yml .
 	cd examples/create_mysql_instance_with_public_ip/; terraform-docs --lockfile=false markdown . --output-file README.md --output-mode inject
 	cd examples/create_mysql_instance_with_private_ip/; terraform-docs --lockfile=false markdown . --output-file README.md --output-mode inject
-	cd examples/mysql_instance_with_read_replica/; terraform-doc --lockfile=falses markdown . --output-file README.md --output-mode inject
+	cd examples/mysql_instance_with_read_replica/; terraform-docs --lockfile=false markdown . --output-file README.md --output-mode inject
 	cd examples/postgres_instance_with_read_replica/; terraform-docs --lockfile=false markdown . --output-file README.md --output-mode inject
 
 commit: docs validate
