@@ -37,7 +37,6 @@ module "test_sql_database_instance_private_ip" {
 
   depends_on = [module.google_service_networking_connection_private_vpc_connection]
 
-
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
   settings_ip_configuration_ipv4_enabled           = false

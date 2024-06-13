@@ -13,3 +13,9 @@ variable "reserved_peering_ranges" {
   description = "(Required) Named IP address range(s) of PEERING type reserved for this service provider. Note that invoking this method with a different range when connection is already established will not reallocate already provisioned service producer subnetworks."
   type        = list(string)
 }
+
+variable "deletion_policy" {
+  description = "(Optional) The deletion policy for the peering. One of 'DELETE' or 'ABANDON'. Defaults to 'DELETE'."
+  type        = string
+  default     = ""
+}

@@ -28,6 +28,7 @@ module "google_service_networking_connection_private_vpc_connection" {
   network                 = module.google_compute_network_private_network.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [module.google_compute_global_address_private_ip.name]
+  deletion_policy         = "ABANDON"
 }
 
 module "sql_database_instance" {
