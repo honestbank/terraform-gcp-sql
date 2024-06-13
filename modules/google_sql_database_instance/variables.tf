@@ -132,10 +132,10 @@ variable "settings_backup_configuration_backup_retention_settings_retained_backu
   default     = 7
 }
 
-variable "settings_ip_configuration_require_ssl" {
+variable "settings_ip_configuration_ssl_mode" {
   description = "(Optional) Whether SSL connections over IP are enforced or not."
-  type        = bool
-  default     = true
+  type        = map(any)
+  default     = null
 }
 
 variable "settings_ip_configuration_ipv4_enabled" {

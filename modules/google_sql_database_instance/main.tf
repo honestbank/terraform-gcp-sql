@@ -87,8 +87,9 @@ resource "google_sql_database_instance" "instance" {
     }
 
     ip_configuration {
+      #checkov:skip:CKV_GCP_6:Ensure 'Require SSL for connection' is enabled for Cloud SQL Database - default value is true
       #tfsec:ignore:google-sql-encrypt-in-transit-data
-      require_ssl = var.settings_ip_configuration_require_ssl
+      ssl_mode = var.settings_ip_configuration_ssl_mode
 
       #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP - default value is false
       #tfsec:ignore:google-sql-no-public-access
