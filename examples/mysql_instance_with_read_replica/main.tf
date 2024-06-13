@@ -38,9 +38,6 @@ module "sql_database_instance" {
   #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version"
   database_version = "MYSQL_8_0"
 
-  depends_on = [module.google_service_networking_connection_private_vpc_connection]
-
-
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
 
@@ -62,9 +59,13 @@ module "sql_database_instance" {
   settings_tier       = var.settings_tier
   deletion_protection = false
 
-  enable_read_replica                                 = true
+  enable_read_replica                                 = false
   read_replica_settings_ip_configuration_ipv4_enabled = true
   read_replica_settings_tier                          = var.settings_tier
+
+  depends_on = [
+    module.google_service_networking_connection_private_vpc_connection
+  ]
 }
 
 module "sql_database" {

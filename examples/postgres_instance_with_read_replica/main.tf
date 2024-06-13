@@ -58,7 +58,7 @@ module "sql_database_instance" {
   settings_tier       = var.settings_tier
   deletion_protection = false
 
-  enable_read_replica                                 = true
+  enable_read_replica                                 = false
   read_replica_settings_ip_configuration_ipv4_enabled = true
   read_replica_settings_tier                          = var.settings_tier
 }
