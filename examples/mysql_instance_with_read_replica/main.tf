@@ -34,6 +34,10 @@ module "google_service_networking_connection_private_vpc_connection" {
 module "sql_database_instance" {
   source = "../../modules/google_sql_database_instance"
 
+  depends_on = [
+    module.google_service_networking_connection_private_vpc_connection
+  ]
+
   name = "sql-rr-${random_id.instance_suffix.hex}"
   #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version"
   database_version = "MYSQL_8_0"
@@ -62,10 +66,6 @@ module "sql_database_instance" {
   enable_read_replica                                 = true
   read_replica_settings_ip_configuration_ipv4_enabled = true
   read_replica_settings_tier                          = var.settings_tier
-
-  depends_on = [
-    module.google_service_networking_connection_private_vpc_connection
-  ]
 }
 
 module "sql_database" {
