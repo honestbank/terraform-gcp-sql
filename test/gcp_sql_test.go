@@ -1,13 +1,37 @@
 package test
 
 import (
+	_ "errors"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"github.com/stretchr/testify/assert"
 )
+
+const (
+	maxRetries    = 3
+	retryInterval = 10 * time.Second
+)
+
+// function retryTerraformDestroy attempts to destroy the Terraform configuration with 3 retries, returning the last encountered error if unsuccessful.
+func retryTerraformDestroy(t *testing.T, terraformOptions *terraform.Options) error {
+	var err error
+	for i := 0; i < maxRetries; i++ {
+		// Run terraform.DestroyE and check for nil indicating success
+		_, err := terraform.DestroyE(t, terraformOptions)
+		if err == nil {
+			return nil // Success, no error
+		}
+		t.Logf("Retry %d/%d: Terraform destroy failed with error: %v", i+1, maxRetries, err)
+
+		// Wait time before retrying
+		time.Sleep(retryInterval)
+	}
+	return err // Return the last error encountered
+}
 
 func TestTerraformCreateGCPSQL(t *testing.T) {
 	t.Parallel()
@@ -17,14 +41,21 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 
 		testDirectory := test_structure.CopyTerraformFolderToTemp(t, "..", "examples/mysql_instance_with_read_replica")
 
-		// retryable errors in terraform testing.
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: testDirectory,
 		})
 
-		defer terraform.Destroy(t, terraformOptions)
+		// Destroying terraform resources with 3 retries
+		defer func() {
+			err := retryTerraformDestroy(t, terraformOptions)
+			if err != nil {
+				t.Fatalf("Failed to destroy resources: %v", err)
+			}
+		}()
 
-		terraform.InitAndApply(t, terraformOptions)
+		// Apply the Terraform configuration
+		_, err := terraform.InitAndApplyE(t, terraformOptions)
+		assert.NoError(t, err, "Terraform apply failed")
 
 		var output string
 
@@ -75,14 +106,21 @@ func TestTerraformCreateGCPSQL(t *testing.T) {
 
 		testDirectory := test_structure.CopyTerraformFolderToTemp(t, "..", "examples/postgres_instance_with_read_replica")
 
-		// retryable errors in terraform testing.
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: testDirectory,
 		})
 
-		defer terraform.Destroy(t, terraformOptions)
+		// Destroying terraform resources with 3 retries
+		defer func() {
+			err := retryTerraformDestroy(t, terraformOptions)
+			if err != nil {
+				t.Fatalf("Failed to destroy resources: %v", err)
+			}
+		}()
 
-		terraform.InitAndApply(t, terraformOptions)
+		// Apply the Terraform configuration
+		_, err := terraform.InitAndApplyE(t, terraformOptions)
+		assert.NoError(t, err, "Terraform apply failed")
 
 		var output string
 
