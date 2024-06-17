@@ -6,7 +6,7 @@ user_host = "%"
 user_type = "BUILT_IN"
 user_name = "sql-user"
 
-settings_tier                                    = "db-f1-micro"
+settings_tier                                    = "db-g1-small"
 settings_availability_type                       = "ZONAL"
 settings_disk_size                               = 10
 settings_disk_type                               = "PD_SSD"

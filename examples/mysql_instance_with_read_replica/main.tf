@@ -28,17 +28,19 @@ module "google_service_networking_connection_private_vpc_connection" {
   network                 = module.google_compute_network_private_network.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [module.google_compute_global_address_private_ip.name]
+  deletion_policy         = "ABANDON"
 }
 
 module "sql_database_instance" {
   source = "../../modules/google_sql_database_instance"
 
+  depends_on = [
+    module.google_service_networking_connection_private_vpc_connection
+  ]
+
   name = "sql-rr-${random_id.instance_suffix.hex}"
   #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version"
   database_version = "MYSQL_8_0"
-
-  depends_on = [module.google_service_networking_connection_private_vpc_connection]
-
 
   settings_backup_configuration_binary_log_enabled = var.settings_backup_configuration_binary_log_enabled
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
