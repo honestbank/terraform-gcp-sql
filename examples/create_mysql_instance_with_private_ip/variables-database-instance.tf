@@ -44,8 +44,8 @@ variable "settings_backup_configuration_binary_log_enabled" {
   default     = true
 }
 
-variable "settings_ip_configuration_require_ssl" {
-  description = "(Optional) Whether SSL connections over IP are enforced or not."
-  type        = bool
-  default     = true
+variable "settings_ip_configuration_ssl_mode" {
+  description = " (Optional) Specify how SSL connection should be enforced in DB connections."
+  type        = string
+  default     = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
 }
