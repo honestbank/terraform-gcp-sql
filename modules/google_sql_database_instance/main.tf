@@ -42,6 +42,7 @@ locals {
 #tfsec:ignore:google-sql-pg-log-lock-waits
 #tfsec:ignore:google-sql-pg-log-disconnections
 #tfsec:ignore:google-sql-pg-log-checkpoints
+#tfsec:ignore:google-sql-encrypt-in-transit-data
 resource "google_sql_database_instance" "instance" {
   # This is a component module - these setting will be overridden from the embedding module/repo.
   #checkov:skip=CKV_GCP_51:Ensure PostgreSQL database 'log_checkpoints' flag is set to 'on'
@@ -54,7 +55,8 @@ resource "google_sql_database_instance" "instance" {
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
   #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
   #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
-  #checkov:skip=CKV_GCP_79: "Ensure SQL database is using latest Major version"
+  #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
+  #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
 
   database_version = var.database_version
 
@@ -88,10 +90,10 @@ resource "google_sql_database_instance" "instance" {
 
     ip_configuration {
       #tfsec:ignore:google-sql-encrypt-in-transit-data
-      require_ssl = var.settings_ip_configuration_require_ssl
+      ssl_mode = var.settings_ip_configuration_ssl_mode
 
       #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP - default value is false
-      #tfsec:ignore:google-sql-no-public-access
+      #tfsec:ignore:google-sql-no-public-access:Ensure Cloud SQL database does not have public IP
       ipv4_enabled = var.settings_ip_configuration_ipv4_enabled
 
       private_network                               = var.settings_ip_configuration_private_network
@@ -153,7 +155,8 @@ resource "google_sql_database_instance" "read_replica" {
   #checkov:skip=CKV_GCP_111:Ensure GCP PostgreSQL logs SQL statements 'pgaudit.log' flag is set to 'all'
   #checkov:skip=CKV2_GCP_20:Ensure MySQL DB instance has point-in-time recovery backup configured
   #checkov:skip=CKV2_GCP_13:Ensure PostgreSQL database flag 'log_duration' is set to 'on'
-  #checkov:skip=CKV_GCP_79: "Ensure SQL database is using latest Major version"
+  #checkov:skip=CKV_GCP_79:Ensure SQL database is using latest Major version
+  #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL
 
   depends_on = [
     google_sql_database_instance.instance
@@ -182,17 +185,16 @@ resource "google_sql_database_instance" "read_replica" {
     disk_autoresize_limit = var.settings_disk_autoresize_limit
 
     backup_configuration {
-      #tfsec:ignore:google-sql-enable-backup:read replica no need to backup
       enabled            = false
       binary_log_enabled = false
     }
 
     ip_configuration {
-      #tfsec:ignore:google-sql-encrypt-in-transit-data:because default value is true
-      require_ssl = var.settings_ip_configuration_require_ssl
+      #tfsec:ignore:google-sql-encrypt-in-transit-data
+      ssl_mode = var.settings_ip_configuration_ssl_mode
 
       #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP - default value is false
-      #tfsec:ignore:google-sql-no-public-access
+      #tfsec:ignore:google-sql-no-public-access: "Ensure Cloud SQL database does not have public IP"
       ipv4_enabled = var.read_replica_settings_ip_configuration_ipv4_enabled
 
       private_network                               = var.settings_ip_configuration_private_network

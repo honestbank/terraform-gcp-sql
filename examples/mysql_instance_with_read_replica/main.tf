@@ -56,7 +56,7 @@ module "sql_database_instance" {
   settings_ip_configuration_private_network = module.google_compute_network_private_network.id
 
   #checkov:skip=CKV_GCP_6:Ensure all Cloud SQL database instance requires all incoming connections to use SSL"
-  settings_ip_configuration_require_ssl = false
+  settings_ip_configuration_ssl_mode = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
 
   settings_availability_type = var.settings_availability_type
 

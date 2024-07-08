@@ -132,10 +132,14 @@ variable "settings_backup_configuration_backup_retention_settings_retained_backu
   default     = 7
 }
 
-variable "settings_ip_configuration_require_ssl" {
-  description = "(Optional) Whether SSL connections over IP are enforced or not."
-  type        = bool
-  default     = true
+variable "settings_ip_configuration_ssl_mode" {
+  description = "(Optional) Specify how SSL connection should be enforced in DB connections. Supported values are `ALLOW_UNENCRYPTED_AND_ENCRYPTED`, `ENCRYPTED_ONLY`, `TRUSTED_CLIENT_CERTIFICATE_REQUIRED`."
+  type        = string
+  default     = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+  validation {
+    condition     = can(regex("ALLOW_UNENCRYPTED_AND_ENCRYPTED|ENCRYPTED_ONLY|TRUSTED_CLIENT_CERTIFICATE_REQUIRED", var.settings_ip_configuration_ssl_mode))
+    error_message = "Support only `ALLOW_UNENCRYPTED_AND_ENCRYPTED`, `ENCRYPTED_ONLY`, `TRUSTED_CLIENT_CERTIFICATE_REQUIRED`."
+  }
 }
 
 variable "settings_ip_configuration_ipv4_enabled" {
