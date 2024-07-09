@@ -16,7 +16,7 @@ module "test_sql_database_instance" {
   settings_backup_configuration_enabled            = var.settings_backup_configuration_enabled
   settings_ip_configuration_ipv4_enabled           = var.settings_ip_configuration_ipv4_enabled
   settings_ip_configuration_private_network        = var.settings_ip_configuration_private_network
-  settings_ip_configuration_require_ssl            = var.settings_ip_configuration_require_ssl
+  settings_ip_configuration_ssl_mode               = var.settings_ip_configuration_ssl_mode
   settings_tier                                    = var.settings_tier
   deletion_protection                              = false
 }

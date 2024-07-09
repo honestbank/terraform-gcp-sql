@@ -12,4 +12,3 @@ settings_disk_size                               = 10
 settings_disk_type                               = "PD_SSD"
 settings_backup_configuration_enabled            = true
 settings_backup_configuration_binary_log_enabled = true
-settings_ip_configuration_require_ssl            = true
