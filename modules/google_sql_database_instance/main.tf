@@ -66,6 +66,7 @@ resource "google_sql_database_instance" "instance" {
   master_instance_name = var.master_instance_name
 
   settings {
+    activation_policy           = var.settings_activation_policy
     availability_type           = var.settings_availability_type
     deletion_protection_enabled = var.deletion_protection
     disk_autoresize             = var.settings_disk_autoresize
