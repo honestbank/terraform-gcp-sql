@@ -50,6 +50,16 @@ variable "read_replica_settings_tier" {
   default     = ""
 }
 
+variable "settings_activation_policy" {
+  description = "This specifies when the instance should be active. Set value to ALWAYS to start the instance and NEVER to stop the instance"
+  type        = string
+  default     = "ALWAYS"
+  validation {
+    condition     = can(regex("^ALWAYS|^NEVER", var.settings_activation_policy))
+    error_message = "Support only `ALWAYS` or `NEVER`."
+  }
+}
+
 variable "settings_availability_type" {
   description = "(Optional, Default: `ZONAL`) The availability type of the Cloud SQL instance, high availability (`REGIONAL`) or single zone (`ZONAL`)"
   type        = string
