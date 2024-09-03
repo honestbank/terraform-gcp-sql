@@ -37,3 +37,9 @@ output "read_replica_private_ip_address" {
   description = "The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config."
   value       = try(google_sql_database_instance.read_replica[0].private_ip_address, "")
 }
+
+output "read_replica_db_server_ca" {
+  description = "Latest CA certificate used by the read replica database server"
+  value       = local.read_replica_db_server_ca
+  sensitive   = true
+}
