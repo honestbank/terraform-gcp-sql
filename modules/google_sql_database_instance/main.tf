@@ -34,6 +34,12 @@ locals {
 
   tmp_database_flags    = local.is_postgres ? local.postgres_database_flags : local.mysql_database_flags
   custom_database_flags = merge(var.settings_database_flags, local.tmp_database_flags)
+
+  primary_db_server_ca_furthest_expiration_time = reverse(sort([for k, v in google_sql_database_instance.instance.server_ca_cert : v.expiration_time]))[0]
+  primary_db_server_ca                          = [for v in google_sql_database_instance.instance.server_ca_cert : v.cert if v.expiration_time == local.primary_db_server_ca_furthest_expiration_time][0]
+
+  read_replica_db_server_ca_furthest_expiration_time = var.enable_read_replica ? reverse(sort([for k, v in google_sql_database_instance.read_replica[0].server_ca_cert : v.expiration_time]))[0] : ""
+  read_replica_db_server_ca                          = var.enable_read_replica ? [for v in google_sql_database_instance.read_replica[0].server_ca_cert : v.cert if v.expiration_time == local.read_replica_db_server_ca_furthest_expiration_time][0] : ""
 }
 
 #These setting will override from code

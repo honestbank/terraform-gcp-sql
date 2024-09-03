@@ -42,3 +42,9 @@ output "database_version" {
   description = "Database version, such as MYSQL_8_0 or POSTGRES_*"
   value       = google_sql_database_instance.instance.database_version
 }
+
+output "primary_db_server_ca" {
+  description = "Latest CA certificate used by the primary database server"
+  value       = local.primary_db_server_ca
+  sensitive   = true
+}
