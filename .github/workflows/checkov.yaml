@@ -25,8 +25,8 @@ jobs:
           fi
       - name: Output baseline contents to console
         run: |
-          echo "Checkov baseline file (.checkov.baseline) contents:"
-          cat .checkov.baseline
+            echo "Checkov baseline file (.checkov.baseline) contents:"
+            cat .checkov.baseline
       - name: Run Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
