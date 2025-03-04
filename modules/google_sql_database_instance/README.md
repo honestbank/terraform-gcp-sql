@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.48, < 6.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.48, < 7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.48, < 6.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 4.48, < 7.0 |
 
 ## Modules
 
@@ -67,9 +67,11 @@ No modules.
 | <a name="output_first_ip_address"></a> [first\_ip\_address](#output\_first\_ip\_address) | The IPv4 address assigned. |
 | <a name="output_instance_name"></a> [instance\_name](#output\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | The IPv4 address assigned. |
+| <a name="output_primary_db_server_ca"></a> [primary\_db\_server\_ca](#output\_primary\_db\_server\_ca) | Latest CA certificate used by the primary database server |
 | <a name="output_private_ip_address"></a> [private\_ip\_address](#output\_private\_ip\_address) | The first private (`PRIVATE`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
 | <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | The first public (`PRIMARY`) IPv4 address assigned. This is a workaround for an issue fixed in Terraform 0.12 but also provides a convenient way to access an IP of a specific type without performing filtering in a Terraform config. |
 | <a name="output_read_replica_connection_name"></a> [read\_replica\_connection\_name](#output\_read\_replica\_connection\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
+| <a name="output_read_replica_db_server_ca"></a> [read\_replica\_db\_server\_ca](#output\_read\_replica\_db\_server\_ca) | Latest CA certificate used by the read replica database server |
 | <a name="output_read_replica_first_ip_address"></a> [read\_replica\_first\_ip\_address](#output\_read\_replica\_first\_ip\_address) | The IPv4 address assigned. |
 | <a name="output_read_replica_instance_name"></a> [read\_replica\_instance\_name](#output\_read\_replica\_instance\_name) | The connection name of the instance to be used in connection strings. For example, when connecting with Cloud SQL Proxy. |
 | <a name="output_read_replica_ip_address"></a> [read\_replica\_ip\_address](#output\_read\_replica\_ip\_address) | The IPv4 address assigned. |
