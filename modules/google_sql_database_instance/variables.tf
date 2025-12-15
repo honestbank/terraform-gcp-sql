@@ -233,3 +233,16 @@ variable "settings_maintenance_window_hour" {
     error_message = " maintenance window hour must be >= 0 and <= 23."
   }
 }
+
+variable "edition" {
+  description = "The edition of the Database instance possible values are ENTERPRISE/ ENTERPRISE_PLUS"
+  default     = "ENTERPRISE"
+  type        = string
+  validation {
+    condition = contains(
+      ["ENTERPRISE", "ENTERPRISE_PLUS"],
+      upper(var.edition)
+    )
+    error_message = "edition must be one of: ENTERPRISE or ENTERPRISE_PLUS."
+  }
+}
