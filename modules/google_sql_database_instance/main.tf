@@ -79,6 +79,7 @@ resource "google_sql_database_instance" "instance" {
     disk_autoresize_limit       = var.settings_disk_autoresize_limit
     disk_type                   = var.settings_disk_type
     disk_size                   = var.settings_disk_size
+    edition                     = var.edition
     tier                        = var.settings_tier
 
     backup_configuration {
