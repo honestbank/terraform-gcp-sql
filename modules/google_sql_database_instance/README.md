@@ -3,13 +3,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 4.48, < 7.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.0, < 7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.48, < 7.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 6.0, < 7.0 |
 
 ## Modules
 
@@ -32,6 +32,7 @@ No modules.
 | <a name="input_enable_read_replica"></a> [enable\_read\_replica](#input\_enable\_read\_replica) | Enable or Disable Read Replica | `bool` | `false` | no |
 | <a name="input_master_instance_name"></a> [master\_instance\_name](#input\_master\_instance\_name) | (Optional) The name of the existing instance that will act as the master in the replication setup. Note, this requires the master to have `binary_log_enabled` set, as well as existing backups. | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Optional, Computed) The name of the instance. If the name is left blank, Terraform will randomly generate one when the instance is first created. This is done because after a name is used, it cannot be reused for up to one week. | `string` | `""` | no |
+| <a name="input_read_replica_psc_config"></a> [read\_replica\_psc\_config](#input\_read\_replica\_psc\_config) | (Optional) PSC config for read replicas | <pre>object({<br>    psc_enabled               = optional(bool)<br>    allowed_consumer_projects = optional(set(string))<br>  })</pre> | `null` | no |
 | <a name="input_read_replica_settings_ip_configuration_ipv4_enabled"></a> [read\_replica\_settings\_ip\_configuration\_ipv4\_enabled](#input\_read\_replica\_settings\_ip\_configuration\_ipv4\_enabled) | Whether this Cloud SQL instance should be assigned a public IPV4 address. At least `ipv4_enabled` must be enabled or a `private_network` must be configured. | `bool` | `false` | no |
 | <a name="input_read_replica_settings_tier"></a> [read\_replica\_settings\_tier](#input\_read\_replica\_settings\_tier) | (Required) The machine type to use. See tiers for more details and supported versions. Postgres supports only shared-core machine types, and custom machine types | `string` | `""` | no |
 | <a name="input_region"></a> [region](#input\_region) | (Optional) The region the instance will sit in | `string` | `""` | no |
