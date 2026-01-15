@@ -246,3 +246,12 @@ variable "edition" {
     error_message = "edition must be one of: ENTERPRISE or ENTERPRISE_PLUS."
   }
 }
+
+variable "read_replica_psc_config" {
+  description = "(Optional) PSC config for read replicas"
+  type = object({
+    psc_enabled               = optional(bool)
+    allowed_consumer_projects = optional(set(string))
+  })
+  default = null
+}

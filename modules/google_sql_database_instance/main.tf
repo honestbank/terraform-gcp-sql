@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 4.48, < 7.0"
+      version = ">= 6.0, < 7.0"
     }
   }
 }
@@ -207,6 +207,18 @@ resource "google_sql_database_instance" "read_replica" {
 
       private_network                               = var.settings_ip_configuration_private_network
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
+
+      dynamic "psc_config" {
+        for_each = var.read_replica_psc_config == null ? [] : [var.read_replica_psc_config]
+        content {
+          psc_enabled = coalesce(
+            psc_config.value.psc_enabled,
+            true
+          )
+
+          allowed_consumer_projects = psc_config.value.allowed_consumer_projects
+        }
+      }
     }
 
     insights_config {
