@@ -226,7 +226,7 @@ resource "google_sql_database_instance" "read_replica" {
       query_string_length     = var.settings_insights_config_query_string_length
       query_plans_per_minute  = var.settings_insights_config_query_plans_per_minute
       record_application_tags = true
-      record_client_address   = true
+      record_client_address   = var.read_replica_psc_config == null # client address recording is not allowed when psc is enabled
     }
 
     dynamic "database_flags" {
