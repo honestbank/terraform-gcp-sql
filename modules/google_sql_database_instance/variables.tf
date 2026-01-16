@@ -255,3 +255,16 @@ variable "read_replica_psc_config" {
   })
   default = null
 }
+
+variable "authorised_networks" {
+  description = "Map of authorized networks to allow access."
+  type        = map(string)
+  default     = {}
+  validation {
+    condition = alltrue([
+      for cidr in values(var.authorised_networks) :
+      can(cidrnetmask(cidr))
+    ])
+    error_message = "All authorised_networks values must be valid CIDR blocks."
+  }
+}

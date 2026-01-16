@@ -104,6 +104,16 @@ resource "google_sql_database_instance" "instance" {
       #tfsec:ignore:google-sql-no-public-access:Ensure Cloud SQL database does not have public IP
       ipv4_enabled = var.settings_ip_configuration_ipv4_enabled
 
+      dynamic "authorized_networks" {
+        for_each = var.authorised_networks
+        iterator = onprem
+
+        content {
+          name  = "allow_${onprem.key}"
+          value = onprem.value
+        }
+      }
+
       private_network                               = var.settings_ip_configuration_private_network
       allocated_ip_range                            = var.settings_ip_configuration_allocated_ip_range
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
