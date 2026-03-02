@@ -268,3 +268,9 @@ variable "authorised_networks" {
     error_message = "All authorised_networks values must be valid CIDR blocks."
   }
 }
+
+variable "settings_database_authentication_enabled" {
+  description = "(Optional, Default: `true`) Whether to enable IAM database authentication. When enabled, existing BUILT_IN password users continue to work alongside IAM users (CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP)."
+  type        = bool
+  default     = true
+}

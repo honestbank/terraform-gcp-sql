@@ -12,21 +12,23 @@ locals {
 
   mysql_database_flags = {
     # enable Cloud SQL for MySQL Audit Plugin - https://cloud.google.com/sql/docs/mysql/use-db-audit#audit_plugin_settings
-    cloudsql_mysql_audit = "ON"
+    cloudsql_mysql_audit        = "ON"
+    cloudsql_iam_authentication = var.settings_database_authentication_enabled ? "on" : "off"
   }
 
   postgres_database_flags = {
-    "cloudsql.enable_pgaudit" = "on"
-    log_hostname              = "on"
-    log_duration              = "on"
-    log_temp_files            = "0"
-    log_connections           = "on"
-    log_lock_waits            = "on"
-    log_disconnections        = "on"
-    log_checkpoints           = "on"
-    "pgaudit.log"             = "all"
-    "pgaudit.log_client"      = "on"
-    "pgaudit.log_level"       = "notice"
+    "cloudsql.enable_pgaudit"     = "on"
+    "cloudsql.iam_authentication" = var.settings_database_authentication_enabled ? "on" : "off"
+    log_hostname                  = "on"
+    log_duration                  = "on"
+    log_temp_files                = "0"
+    log_connections               = "on"
+    log_lock_waits                = "on"
+    log_disconnections            = "on"
+    log_checkpoints               = "on"
+    "pgaudit.log"                 = "all"
+    "pgaudit.log_client"          = "on"
+    "pgaudit.log_level"           = "notice"
   }
 
   settings_backup_configuration_binary_log_enabled             = local.is_postgres ? false : var.settings_backup_configuration_binary_log_enabled
@@ -207,8 +209,8 @@ resource "google_sql_database_instance" "read_replica" {
       binary_log_enabled = false
     }
 
+    #tfsec:ignore:google-sql-encrypt-in-transit-data
     ip_configuration {
-      #tfsec:ignore:google-sql-encrypt-in-transit-data
       ssl_mode = var.settings_ip_configuration_ssl_mode
 
       #checkov:skip=CKV_GCP_60:Ensure Cloud SQL database does not have public IP - default value is false
