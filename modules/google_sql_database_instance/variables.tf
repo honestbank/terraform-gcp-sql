@@ -188,6 +188,12 @@ variable "settings_database_flags" {
   default     = {}
 }
 
+variable "settings_database_read_replica_flags" {
+  description = "List of Cloud SQL flags applied to the read replica. If null (default), the read replica inherits settings_database_flags. Set this to give read replicas a different flag set from the primary - for example to omit flags that require a larger instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
+  type        = map(any)
+  default     = null
+}
+
 variable "enable_read_replica" {
   description = "Enable or Disable Read Replica"
   type        = bool
