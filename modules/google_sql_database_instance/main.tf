@@ -127,6 +127,18 @@ resource "google_sql_database_instance" "instance" {
       private_network                               = var.settings_ip_configuration_private_network
       allocated_ip_range                            = var.settings_ip_configuration_allocated_ip_range
       enable_private_path_for_google_cloud_services = var.settings_ip_configuration_enable_private_path_for_google_cloud_services
+
+      dynamic "psc_config" {
+        for_each = var.primary_psc_config == null ? [] : [var.primary_psc_config]
+        content {
+          psc_enabled = coalesce(
+            psc_config.value.psc_enabled,
+            true
+          )
+
+          allowed_consumer_projects = psc_config.value.allowed_consumer_projects
+        }
+      }
     }
 
     insights_config {
@@ -134,7 +146,7 @@ resource "google_sql_database_instance" "instance" {
       query_string_length     = var.settings_insights_config_query_string_length
       query_plans_per_minute  = var.settings_insights_config_query_plans_per_minute
       record_application_tags = true
-      record_client_address   = true
+      record_client_address   = var.primary_psc_config == null # client address recording is not allowed when psc is enabled
     }
 
     dynamic "database_flags" {

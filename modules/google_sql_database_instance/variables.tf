@@ -253,6 +253,15 @@ variable "edition" {
   }
 }
 
+variable "primary_psc_config" {
+  description = "(Optional) PSC config for primary"
+  type = object({
+    psc_enabled               = optional(bool)
+    allowed_consumer_projects = optional(set(string))
+  })
+  default = null
+}
+
 variable "read_replica_psc_config" {
   description = "(Optional) PSC config for read replicas"
   type = object({
