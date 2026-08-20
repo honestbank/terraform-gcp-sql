@@ -47,12 +47,12 @@ jobs:
         id: go
 
       - name: Install Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
         with:
           terraform_version: "1.9.0"
 
       - name: Login to Google Cloud
-        uses: google-github-actions/auth@v2 # Updated to latest version
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2.1.13 # Updated to latest version
         with:
           credentials_json: ${{ env.TERRATEST_GOOGLE_CREDENTIALS }}
 
@@ -64,7 +64,7 @@ jobs:
           make tests
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@16ca923e6ccbb50770c415a0ccd43709a8c5f7a4 # v4.2.2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
